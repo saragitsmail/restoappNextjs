@@ -23,7 +23,7 @@ export const menuItem = defineType({
     }),
     defineField({
       name: 'price',
-      title: 'Price (Da)',
+      title: 'Price (DA)',
       type: 'number',
       validation: (Rule) => Rule.required().positive(),
     }),
@@ -85,7 +85,7 @@ export const menuItem = defineType({
       const { title, subtitle, media } = selection
       return {
         title,
-        subtitle: subtitle ? `$${subtitle}` : '',
+        subtitle: subtitle ? `${subtitle} DA ` : '',
         media,
       }
     },

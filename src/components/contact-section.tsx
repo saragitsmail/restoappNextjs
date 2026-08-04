@@ -45,10 +45,10 @@ export default function ContactSection() {
         <div className="lg:col-span-5 space-y-6">
           <div className="glass-panel p-8 rounded-xs space-y-6 border border-gold/20">
             <h3 className="font-serif text-2xl font-bold text-gold">
-              LUMIÈRE Paris
+              LUMIÈRE
             </h3>
             <p className="text-xs text-[#A0A0A0] font-light leading-relaxed">
-              Nestled in the heart of Paris, Lumière combines Michelin-starred culinary precision with an intimate black and gold atmosphere.
+              In the vibrant heart of Algiers, Lumière delivers a luxurious dining experience, combining modern elegance with a refined black and gold setting.
             </p>
 
             <div className="space-y-4 pt-4 border-t border-gold/10 text-sm">
@@ -56,7 +56,7 @@ export default function ContactSection() {
                 <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Location</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">140 Rue de la Paix, 75002 Paris, France</p>
+                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5"> 140 Didouche Mourad Street, Algiers, Algeria</p>
                 </div>
               </div>
 
@@ -64,7 +64,7 @@ export default function ContactSection() {
                 <Clock className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Dinner Service</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">Monday – Sunday: 5:00 PM – 11:30 PM</p>
+                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">Daily service: Lunch 12:00 PM – 3:00 PM | Dinner 7:00 PM – 11:30 PM</p>
                   <p className="text-[11px] text-gold/80 italic mt-0.5">Private Dining Available Upon Request</p>
                 </div>
               </div>
@@ -73,15 +73,17 @@ export default function ContactSection() {
                 <Phone className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Direct Telephone</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">+33 (0)1 42 68 55 00</p>
+                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">+213 55 42 68 55 00</p>
+
+
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
                 <Mail className="w-5 h-5 text-gold shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Concierge Email</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">concierge@lumiere-dining.com</p>
+                  <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Email </h4>
+                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">lumiere@gmail.com</p>
                 </div>
               </div>
             </div>
