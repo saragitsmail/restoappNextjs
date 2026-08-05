@@ -64,7 +64,7 @@ export default function ProductDetailsModal({
                   {dish.name}
                 </h3>
                 <span className="font-serif text-2xl font-bold text-gold shrink-0">
-                  ${dish.price}
+                  {dish.price} DA
                 </span>
               </div>
               {dish.category && (

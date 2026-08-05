@@ -85,7 +85,7 @@ export const menuItem = defineType({
       const { title, subtitle, media } = selection
       return {
         title,
-        subtitle: subtitle ? `${subtitle} DA ` : '',
+        subtitle: subtitle ? `${subtitle} DA` : '',
         media,
       }
     },
