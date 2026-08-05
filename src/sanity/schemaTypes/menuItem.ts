@@ -74,6 +74,7 @@ export const menuItem = defineType({
       type: 'boolean',
       initialValue: true,
     }),
+
   ],
   preview: {
     select: {

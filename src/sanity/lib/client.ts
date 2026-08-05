@@ -37,7 +37,7 @@ export async function fetchCrowdFavorites(): Promise<MenuItemData[]> {
       isCrowdFavorite,
       "imageUrl": image.asset->url
     }`
-    const data = await client.fetch(query)
+    const data = await client.fetch(query, {}, { cache: 'no-store' })
     return data || []
   } catch (err) {
     console.error('Error fetching menu items from Sanity:', err)
