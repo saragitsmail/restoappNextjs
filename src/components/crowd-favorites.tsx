@@ -91,7 +91,7 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
                       {dish.name}
                     </h3>
                     <span className="font-serif text-xl font-bold text-gold shrink-0">
-                      ${dish.price}
+                      {dish.price} DA
                     </span>
                   </div>
                   <p className="text-xs text-[#A0A0A0] font-light line-clamp-2 mb-4 leading-relaxed">
