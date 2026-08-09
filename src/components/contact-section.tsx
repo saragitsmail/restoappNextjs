@@ -1,202 +1,96 @@
 'use client'
 
-import { useState } from 'react'
-import { MapPin, Clock, Phone, Mail, Calendar, Users, CheckCircle, MessageSquare } from 'lucide-react'
+import { MapPin, Phone, Clock, Send } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
-export default function ContactSection() {
-  const [submitted, setSubmitted] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    date: '',
-    guests: '2',
-    notes: '',
-  })
+interface ContactSectionProps {
+  preselectedDish?: any
+  onClearPreselectedDish?: () => void
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', phone: '', date: '', guests: '2', notes: '' })
-    }, 4000)
-  }
+export default function ContactSection({ preselectedDish, onClearPreselectedDish }: ContactSectionProps) {
+  const { t } = useLanguage()
 
   return (
-    <section id="contact" className="relative z-10 py-24 px-6 max-w-7xl mx-auto">
-      {/* Section Header */}
-      <div className="text-center mb-16 space-y-3">
-        <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
-          <Calendar className="w-4 h-4 text-gold" />
-          <span>Reservations & Inquiries</span>
+    <section id="contact" className="py-24 bg-black relative border-t border-gold/10">
+      <div className="max-w-7xl mx-auto px-6 space-y-12">
+        {/* Header */}
+        <div className="text-center space-y-3">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold uppercase tracking-widest">
+            <MapPin className="w-3.5 h-3.5" />
+            {t.contactTag}
+          </span>
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-neutral-100">{t.contactTitle}</h2>
+          <div className="w-16 h-1 bg-gold rounded-full mx-auto" />
         </div>
-        <h2 className="font-serif text-3xl sm:text-5xl text-[#F5F5F5] font-bold">
-          Contact Us & Table Reservation
-        </h2>
-        <p className="text-[#A0A0A0] text-sm max-w-xl mx-auto font-light">
-          We invite you to experience gastronomy at its highest level. Please reserve your table in advance.
-        </p>
-        <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-4" />
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        {/* Contact Info Cards (5 Cols) */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="glass-panel p-8 rounded-xs space-y-6 border border-gold/20">
-            <h3 className="font-serif text-2xl font-bold text-gold">
-              LUMIÈRE
-            </h3>
-            <p className="text-xs text-[#A0A0A0] font-light leading-relaxed">
-              In the vibrant heart of Algiers, Lumière delivers a luxurious dining experience, combining modern elegance with a refined black and gold setting.
-            </p>
-
-            <div className="space-y-4 pt-4 border-t border-gold/10 text-sm">
-              <div className="flex items-start gap-4">
-                <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Location</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5"> 140 Didouche Mourad Street, Algiers, Algeria</p>
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Info Cards Column */}
+          <div className="space-y-6">
+            {/* Address */}
+            <div className="p-6 rounded-2xl bg-[#121212] border border-neutral-800 space-y-3 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-3 text-gold">
+                <div className="p-2.5 bg-gold/10 rounded-xl border border-gold/20">
+                  <MapPin className="w-5 h-5" />
                 </div>
+                <h4 className="font-semibold text-sm uppercase tracking-wider text-neutral-100">
+                  {t.addressTitle}
+                </h4>
               </div>
-
-              <div className="flex items-start gap-4">
-                <Clock className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Dinner Service</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">Daily service: Lunch 12:00 PM – 3:00 PM | Dinner 7:00 PM – 11:30 PM</p>
-                  <p className="text-[11px] text-gold/80 italic mt-0.5">Private Dining Available Upon Request</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Phone className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Direct Telephone</h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">+213 55 42 68 55 00</p>
-
-
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Mail className="w-5 h-5 text-gold shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-xs uppercase tracking-wider font-semibold text-[#F5F5F5]">Email </h4>
-                  <p className="text-xs text-[#A0A0A0] font-light mt-0.5">lumiere@gmail.com</p>
-                </div>
-              </div>
+              <p className="text-xs text-neutral-300 font-light leading-relaxed">{t.addressText}</p>
             </div>
-          </div>
-        </div>
 
-        {/* Reservation Form (7 Cols) */}
-        <div className="lg:col-span-7">
-          <div className="glass-panel p-8 sm:p-10 rounded-xs border border-gold/30 relative">
-            {submitted ? (
-              <div className="py-12 text-center space-y-4 animate-fadeIn">
-                <CheckCircle className="w-14 h-14 text-gold mx-auto animate-bounce" />
-                <h3 className="font-serif text-2xl font-bold text-[#F5F5F5]">
-                  Reservation Request Received
-                </h3>
-                <p className="text-xs text-[#A0A0A0] max-w-md mx-auto">
-                  Thank you, <span className="text-gold font-semibold">{formData.name}</span>. Our concierge team will review your request and confirm your reservation via email shortly.
-                </p>
+            {/* Phone */}
+            <div className="p-6 rounded-2xl bg-[#121212] border border-neutral-800 space-y-3 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-3 text-gold">
+                <div className="p-2.5 bg-gold/10 rounded-xl border border-gold/20">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <h4 className="font-semibold text-sm uppercase tracking-wider text-neutral-100 font-serif">
+                  {t.phoneTitle}
+                </h4>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <h3 className="font-serif text-2xl font-bold text-[#F5F5F5]">
-                  Book Your Experience
-                </h3>
+              <p className="text-xs text-neutral-300 font-light dir-ltr">{t.phoneText}</p>
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <label className="text-[11px] uppercase tracking-widest text-[#A0A0A0] font-semibold">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Lord / Lady Sterling"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-[#0A0A0A]/60 border border-gold/20 focus:border-gold px-4 py-3 text-xs text-[#F5F5F5] rounded-xs outline-none transition-colors"
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <label className="text-[11px] uppercase tracking-widest text-[#A0A0A0] font-semibold">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="client@luxury.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-[#0A0A0A]/60 border border-gold/20 focus:border-gold px-4 py-3 text-xs text-[#F5F5F5] rounded-xs outline-none transition-colors"
-                    />
-                  </div>
-
-                  {/* Date & Time */}
-                  <div className="space-y-2">
-                    <label className="text-[11px] uppercase tracking-widest text-[#A0A0A0] font-semibold flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-gold" />
-                      <span>Preferred Date & Time *</span>
-                    </label>
-                    <input
-                      type="datetime-local"
-                      required
-                      value={formData.date}
-                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="w-full bg-[#0A0A0A]/60 border border-gold/20 focus:border-gold px-4 py-3 text-xs text-[#F5F5F5] rounded-xs outline-none transition-colors"
-                    />
-                  </div>
-
-                  {/* Guests */}
-                  <div className="space-y-2">
-                    <label className="text-[11px] uppercase tracking-widest text-[#A0A0A0] font-semibold flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-gold" />
-                      <span>Number of Guests *</span>
-                    </label>
-                    <select
-                      value={formData.guests}
-                      onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                      className="w-full bg-[#0A0A0A]/80 border border-gold/20 focus:border-gold px-4 py-3 text-xs text-[#F5F5F5] rounded-xs outline-none transition-colors"
-                    >
-                      <option value="1">1 Guest (Single Diner)</option>
-                      <option value="2">2 Guests (Intimate)</option>
-                      <option value="4">4 Guests (Party)</option>
-                      <option value="6">6+ Guests (Private Tasting)</option>
-                    </select>
-                  </div>
+            {/* Opening Hours */}
+            <div className="p-6 rounded-2xl bg-[#121212] border border-neutral-800 space-y-3 hover:border-gold/30 transition-colors">
+              <div className="flex items-center gap-3 text-gold">
+                <div className="p-2.5 bg-gold/10 rounded-xl border border-gold/20">
+                  <Clock className="w-5 h-5" />
                 </div>
+                <h4 className="font-semibold text-sm uppercase tracking-wider text-neutral-100">
+                  {t.hoursTitle}
+                </h4>
+              </div>
+              <p className="text-xs text-neutral-300 font-light leading-relaxed">{t.hoursText}</p>
+            </div>
 
-                {/* Special Requests */}
-                <div className="space-y-2">
-                  <label className="text-[11px] uppercase tracking-widest text-[#A0A0A0] font-semibold flex items-center gap-1.5">
-                    <MessageSquare className="w-3.5 h-3.5 text-gold" />
-                    <span>Special Dietary or Seating Notes</span>
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Allergies, anniversary celebration, sommelier preference..."
-                    value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full bg-[#0A0A0A]/60 border border-gold/20 focus:border-gold px-4 py-3 text-xs text-[#F5F5F5] rounded-xs outline-none transition-colors"
-                  />
-                </div>
+            {/* Direct WhatsApp Contact Button */}
+            <a
+              href="https://wa.me/213550998877?text=Bonjour%20Lumi%C3%A8re%20Restaurant%20!"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full btn-gold py-4 text-xs font-bold uppercase tracking-wider rounded-2xl flex items-center justify-center gap-2 shadow-xl cursor-pointer"
+            >
+              <Send className="w-4 h-4" />
+              <span>{t.whatsappContactBtn}</span>
+            </a>
+          </div>
 
-                <button
-                  type="submit"
-                  className="btn-gold w-full py-4 text-xs font-bold uppercase tracking-[0.2em] rounded-xs cursor-pointer"
-                >
-                  Confirm Reservation Request
-                </button>
-              </form>
-            )}
+          {/* Embedded Google Map Column */}
+          <div className="lg:col-span-2 relative h-[420px] rounded-2xl overflow-hidden border border-gold/20 shadow-2xl">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12788.163773187274!2d3.0315!3d36.7628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb2435b6fef15%3A0x6b10705a610d4810!2sEl%20Biar%2C%20Algiers%2C%20Algeria!5e0!3m2!1sen!2sdz!4v1700000000000!5m2!1sen!2sdz"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Restaurant Location Map"
+            />
           </div>
         </div>
       </div>

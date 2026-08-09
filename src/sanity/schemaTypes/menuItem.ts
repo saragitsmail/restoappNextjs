@@ -74,6 +74,31 @@ export const menuItem = defineType({
       type: 'boolean',
       initialValue: true,
     }),
+    defineField({
+      name: 'badge',
+      title: 'Badge / Highlight Label',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Popular', value: 'Popular' },
+          { title: "Chef's Choice", value: "Chef's Choice" },
+          { title: 'House Special', value: 'House Special' },
+          { title: 'New', value: 'New' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'isPopular',
+      title: 'Is Popular Dish',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'isChefsChoice',
+      title: "Is Chef's Choice",
+      type: 'boolean',
+      initialValue: false,
+    }),
 
   ],
   preview: {

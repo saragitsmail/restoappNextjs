@@ -5,8 +5,15 @@ import AnimatedBackground from '@/components/ui/animated-background'
 import Navbar from '@/components/navbar'
 import Hero from '@/components/hero'
 import CrowdFavorites from '@/components/crowd-favorites'
-import ProductDetailsModal from '@/components/product-details-modal'
+import MenuSkeleton from '@/components/menu-skeleton'
+import AboutSection from '@/components/about-section'
+import FoodGallery from '@/components/food-gallery'
+import ReviewsSection from '@/components/reviews-section'
 import ContactSection from '@/components/contact-section'
+import CartDrawer from '@/components/cart-drawer'
+import CheckoutModal from '@/components/checkout-modal'
+import ProductDetailsModal from '@/components/product-details-modal'
+import StickyMobileOrder from '@/components/sticky-mobile-order'
 import Footer from '@/components/footer'
 import { fetchCrowdFavorites, MenuItemData } from '@/sanity/lib/client'
 
@@ -25,36 +32,22 @@ export default function Home() {
     loadDishes()
   }, [])
 
-  const handleOpenReservation = () => {
-    const contactElem = document.getElementById('contact')
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  const handleOrderDish = (dish: MenuItemData) => {
-    setSelectedDish(null)
-    handleOpenReservation()
-  }
-
   return (
-    <div className="relative min-h-screen bg-[#0A0A0A] text-[#F5F5F5] selection:bg-gold selection:text-[#0A0A0A]">
-      {/* Animated Luxury WebGL / Canvas Background */}
+    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 selection:bg-amber-400 selection:text-black">
+      {/* Canvas / WebGL Animated Background */}
       <AnimatedBackground />
 
-      {/* Glassmorphic Navbar */}
-      <Navbar onOpenBookTable={handleOpenReservation} />
+      {/* Navbar with i18n & Theme Toggles */}
+      <Navbar />
 
-      {/* Main Content */}
+      {/* Main Page Layout */}
       <main className="relative z-10">
         {/* Hero Section */}
-        <Hero onBookTable={handleOpenReservation} />
+        <Hero />
 
-        {/* Crowd Favorites Section (Fetched EXCLUSIVELY from Sanity CMS) */}
+        {/* Sanity CMS Menu Cards Grid */}
         {loading ? (
-          <div className="py-24 text-center text-xs uppercase tracking-widest text-gold animate-pulse">
-            Fetching Menu from Sanity CMS...
-          </div>
+          <MenuSkeleton />
         ) : (
           <CrowdFavorites
             items={dishes}
@@ -62,16 +55,33 @@ export default function Home() {
           />
         )}
 
-        {/* Contact & Reservation Section */}
+        {/* Restaurant Story & Culinary Heritage */}
+        <AboutSection />
+
+        {/* Instagram Food Gallery */}
+        <FoodGallery />
+
+        {/* Customer Reviews & Star Ratings */}
+        <ReviewsSection />
+
+        {/* Location, Info, Map & WhatsApp */}
         <ContactSection />
       </main>
+
+      {/* Slide-out Cart Drawer */}
+      <CartDrawer />
+
+      {/* Checkout Modal & Sanity Submission */}
+      <CheckoutModal />
 
       {/* Product Details Modal */}
       <ProductDetailsModal
         dish={selectedDish}
         onClose={() => setSelectedDish(null)}
-        onOrderDish={handleOrderDish}
       />
+
+      {/* Mobile Sticky Floating Cart Action */}
+      <StickyMobileOrder />
 
       {/* Footer */}
       <Footer />

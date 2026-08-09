@@ -13,18 +13,37 @@
     --text-muted: #a0a0a0;
   }
 
+  html:not(.dark) {
+    --background: #fcfbfa;
+    --foreground: #171717;
+    --surface-dark: #f3f0ea;
+    --surface-card: #ffffff;
+    --border-gold: rgba(180, 140, 30, 0.3);
+    --text-muted: #555555;
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Hanken Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6, .font-serif {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Amiri', 'Traditional Arabic', Georgia, serif;
   }
+}
+
+/* RTL Support Styles */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .font-arabic {
+  font-family: 'Amiri', 'Tajawal', 'Cairo', sans-serif;
 }
 
 /* Glassmorphism Luxury Utilities */
@@ -36,11 +55,22 @@
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
+html:not(.dark) .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(180, 140, 30, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+}
+
 .glass-nav {
   background: rgba(10, 10, 10, 0.75);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+}
+
+html:not(.dark) .glass-nav {
+  background: rgba(253, 251, 250, 0.9);
+  border-bottom: 1px solid rgba(180, 140, 30, 0.2);
 }
 
 .btn-gold {
@@ -91,4 +121,50 @@
 .gold-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, #d4af37 50%, transparent 100%);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Gold Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
 }

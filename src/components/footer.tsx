@@ -1,30 +1,42 @@
 'use client'
 
+import { useLanguage } from '@/context/LanguageContext'
+
 export default function Footer() {
+  const { t } = useLanguage()
+
   return (
-    <footer className="relative z-10 bg-[#070707] border-t border-gold/10 py-16 px-6 text-[#A0A0A0] text-xs">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div>
-          <h3 className="font-serif text-2xl font-bold text-gold tracking-widest mb-3">
-            LUMIÈRE
-          </h3>
-          <p className="text-xs font-light leading-relaxed max-w-sm">
-            A refined culinary experience where timeless elegance meets contemporary gastronomy.
-          </p>
+    <footer className="bg-neutral-950 border-t border-gold/20 py-12 text-[#F5F5F5] relative z-10">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="space-y-2 text-center md:text-left">
+          <span className="font-serif text-2xl tracking-[0.25em] text-gold font-bold">
+            {t.brandName}
+          </span>
+          <p className="text-xs text-neutral-400 font-light max-w-sm">{t.footerDesc}</p>
         </div>
 
-        <div className="flex flex-col space-y-2 uppercase tracking-widest text-[11px]">
-          <a href="#home" className="hover:text-gold transition-colors">Home</a>
-          <a href="#menu" className="hover:text-gold transition-colors">Crowd Favorites</a>
-          <a href="#details" className="hover:text-gold transition-colors">Product Details</a>
-          <a href="#contact" className="hover:text-gold transition-colors">Contact Us & Reservations</a>
-          <a href="/studio" className="text-gold/80 hover:text-gold transition-colors underline pt-2">Client Sanity Studio Login</a>
+        <div className="flex flex-wrap items-center gap-6 text-xs text-neutral-400 font-medium uppercase tracking-widest">
+          <a href="#home" className="hover:text-gold transition-colors">
+            {t.navHome}
+          </a>
+          <a href="#menu" className="hover:text-gold transition-colors">
+            {t.navMenu}
+          </a>
+          <a href="#about" className="hover:text-gold transition-colors">
+            {t.navAbout}
+          </a>
+          <a href="#reviews" className="hover:text-gold transition-colors">
+            {t.navReviews}
+          </a>
+          <a href="#contact" className="hover:text-gold transition-colors">
+            {t.navContact}
+          </a>
+          <a href="/studio" target="_blank" className="hover:text-gold transition-colors text-amber-400 font-bold">
+            {t.navStudio}
+          </a>
         </div>
 
-        <div className="md:text-right space-y-2 font-light text-xs">
-          <p>© {new Date().getFullYear()} Lumière Excellence. All Rights Reserved.</p>
-          <p className="text-[11px] text-gold/60">Designed with Next.js & Sanity.io</p>
-        </div>
+        <div className="text-xs text-neutral-500 font-light">{t.footerRights}</div>
       </div>
     </footer>
   )

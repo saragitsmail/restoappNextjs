@@ -1,139 +1,116 @@
 'use client'
 
+import React from 'react'
+import Image from 'next/image'
+import { X, Plus, Sparkles, Flame } from 'lucide-react'
 import { MenuItemData } from '@/sanity/lib/client'
-import { X, Wine, Utensils, Award, ShoppingBag } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
+import { useCart } from '@/context/CartContext'
 
 interface ProductDetailsModalProps {
   dish: MenuItemData | null
   onClose: () => void
-  onOrderDish: (dish: MenuItemData) => void
+  onOrderDish?: (dish: MenuItemData) => void
 }
 
-export default function ProductDetailsModal({
-  dish,
-  onClose,
-  onOrderDish,
-}: ProductDetailsModalProps) {
+export default function ProductDetailsModal({ dish, onClose }: ProductDetailsModalProps) {
+  const { t } = useLanguage()
+  const { addToCart } = useCart()
+
   if (!dish) return null
 
+  const handleAddToCart = () => {
+    addToCart(dish)
+    onClose()
+  }
+
   return (
-    <div
-      id="details"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-fadeIn"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass-panel border border-gold/30 rounded-xs text-[#F5F5F5] shadow-2xl p-6 sm:p-8"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
+      {/* Backdrop */}
+      <div onClick={onClose} className="fixed inset-0 bg-black/80 backdrop-blur-sm" />
+
+      {/* Modal Card */}
+      <div className="relative w-full max-w-2xl bg-[#121212] border border-gold/30 rounded-3xl shadow-2xl overflow-hidden z-10 text-[#F5F5F5]">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 p-2 text-[#A0A0A0] hover:text-gold hover:bg-gold/10 rounded-full transition-colors"
-          aria-label="Close details"
+          className="absolute top-4 right-4 z-20 p-2 text-white bg-black/60 hover:bg-black rounded-full border border-white/10 transition-colors cursor-pointer"
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Dish Image from Sanity */}
-          <div className="relative aspect-square w-full overflow-hidden rounded-xs border border-gold/20 bg-[#131313]">
-            {dish.imageUrl ? (
-              <img
-                src={dish.imageUrl}
-                alt={dish.name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-xs text-[#A0A0A0] italic">
-                No Image Uploaded in Sanity
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 bg-black/75 border border-gold/40 text-gold text-[11px] uppercase tracking-widest font-semibold rounded-xs">
-              <Award className="w-3.5 h-3.5" />
-              <span>Sanity CMS Dish</span>
+        {/* Dish Image Banner */}
+        <div className="relative h-72 sm:h-80 w-full bg-neutral-900">
+          <Image
+            src={dish.imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947'}
+            alt={dish.name}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
+
+          {/* Badge */}
+          {dish.badge && (
+            <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gold/90 text-black text-xs font-extrabold uppercase tracking-wider shadow-md">
+              <Flame className="w-3.5 h-3.5" />
+              <span>{dish.badge}</span>
             </div>
+          )}
+
+          {/* Price */}
+          <div className="absolute bottom-4 right-6 px-4 py-2 rounded-2xl glass-panel border border-gold/30 text-gold font-bold text-xl shadow-xl">
+            {dish.price} {t.priceCurrency}
+          </div>
+        </div>
+
+        {/* Modal Details */}
+        <div className="p-6 sm:p-8 space-y-6">
+          <div className="space-y-2">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-100">{dish.name}</h3>
+            <p className="text-sm text-neutral-300 font-light leading-relaxed">{dish.description}</p>
           </div>
 
-          {/* Dish Details Content */}
-          <div className="flex flex-col space-y-5">
-            <div>
-              <div className="flex justify-between items-baseline gap-4 mb-1">
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#F5F5F5]">
-                  {dish.name}
-                </h3>
-                <span className="font-serif text-2xl font-bold text-gold shrink-0">
-                  {dish.price} DA
-                </span>
+          {/* Ingredients */}
+          {dish.ingredients && dish.ingredients.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-neutral-800">
+              <h4 className="text-xs font-semibold text-gold uppercase tracking-wider">
+                {t.ingredientsTitle}
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {dish.ingredients.map((ing, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 bg-neutral-900 border border-neutral-800 rounded-full text-xs text-neutral-300"
+                  >
+                    {ing}
+                  </span>
+                ))}
               </div>
-              {dish.category && (
-                <p className="text-xs uppercase tracking-widest text-gold/80 mb-3">
-                  {dish.category}
-                </p>
-              )}
-              <p className="text-sm text-[#A0A0A0] font-light leading-relaxed">
-                {dish.description}
-              </p>
             </div>
+          )}
 
-            <div className="w-full h-[1px] bg-gold/15" />
-
-            {/* Key Ingredients */}
-            {dish.ingredients && dish.ingredients.length > 0 && (
+          {/* Sommelier Pairing */}
+          {dish.pairing && (
+            <div className="p-4 rounded-xl bg-gold/10 border border-gold/20 flex items-start gap-3">
+              <Sparkles className="w-5 h-5 text-gold shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-2 flex items-center gap-1.5">
-                  <Utensils className="w-3.5 h-3.5" />
-                  <span>Key Culinary Ingredients</span>
+                <h4 className="text-xs font-semibold text-gold uppercase tracking-wider">
+                  {t.pairingTitle}
                 </h4>
-                <div className="flex flex-wrap gap-2">
-                  {dish.ingredients.map((item, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-gold/5 border border-gold/20 text-xs text-[#F5F5F5] rounded-xs"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-xs text-neutral-200 font-light mt-0.5">{dish.pairing}</p>
               </div>
-            )}
-
-            {/* Wine Pairing */}
-            {dish.pairing && (
-              <div className="p-3.5 bg-gold/5 border border-gold/20 rounded-xs flex items-start gap-3">
-                <Wine className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                <div>
-                  <h5 className="text-[11px] uppercase tracking-wider text-gold font-semibold">
-                    Sommelier Wine Pairing
-                  </h5>
-                  <p className="text-xs text-[#F5F5F5] italic mt-0.5">
-                    {dish.pairing}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* CTA Buttons */}
-            <div className="pt-2 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => {
-                  onOrderDish(dish)
-                  onClose()
-                }}
-                className="btn-gold px-6 py-3 text-xs uppercase tracking-widest rounded-xs flex-1 flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span>Reserve This Dish</span>
-              </button>
-
-              <button
-                onClick={onClose}
-                className="btn-outline-gold px-5 py-3 text-xs uppercase tracking-widest rounded-xs"
-              >
-                Back to Menu
-              </button>
             </div>
+          )}
+
+          {/* CTA Action */}
+          <div className="pt-4 border-t border-neutral-800">
+            <button
+              onClick={handleAddToCart}
+              className="w-full btn-gold py-4 text-xs font-extrabold uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-xl"
+            >
+              <Plus className="w-4 h-4" />
+              <span>{t.addToCart} • {dish.price} {t.priceCurrency}</span>
+            </button>
           </div>
         </div>
       </div>
