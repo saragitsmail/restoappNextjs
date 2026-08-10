@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { X, CheckCircle2, ShoppingBag, Loader2, Send } from 'lucide-react'
+import { X, Loader2 } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import { useLanguage } from '@/context/LanguageContext'
 
@@ -22,7 +22,7 @@ export default function CheckoutModal() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!customerName.trim() || !phone.trim()) {
-      setErrorMsg('Please fill in your name and phone number.')
+      setErrorMsg(isRTL ? 'الرجاء إدخال الاسم ورقم الهاتف.' : 'Please enter your name and phone number.')
       return
     }
 
@@ -78,97 +78,81 @@ export default function CheckoutModal() {
     setErrorMsg('')
   }
 
-  const generateWhatsAppMessage = () => {
-    if (!successOrder) return '#'
-    const itemsText = cart
-      .map((ci) => `• ${ci.quantity}x ${ci.dish.name} (${ci.dish.price * ci.quantity} DA)`)
-      .join('%0A')
-
-    const message = `Bonjour Lumière Restaurant !%0A%0A*Nouvelle Commande #${successOrder.orderId}*%0A*Nom:* ${encodeURIComponent(customerName)}%0A*Téléphone:* ${encodeURIComponent(phone)}%0A*Adresse:* ${encodeURIComponent(address || 'Emporter')}%0A%0A*Plats Commandés:*%0A${itemsText}%0A%0A*Total:* ${successOrder.total} DA`
-    
-    return `https://wa.me/213550998877?text=${message}`
-  }
-
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
       {/* Backdrop */}
-      <div onClick={handleClose} className="fixed inset-0 bg-black/80 backdrop-blur-sm" />
+      <div onClick={handleClose} className="fixed inset-0 bg-black/85 backdrop-blur-sm" />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-xl bg-[#121212] border border-gold/30 rounded-2xl shadow-2xl overflow-hidden z-10 text-[#F5F5F5]">
+      <div className="relative w-full max-w-lg bg-[#0e0e0e] border border-neutral-800 shadow-2xl overflow-hidden z-10 text-[#F5F5F5]">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-gold/20 flex justify-between items-center bg-black/40">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-gold/10 rounded-full border border-gold/30 text-gold">
-              <ShoppingBag className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-serif text-lg text-gold font-bold">{t.checkoutTitle}</h3>
-              <p className="text-xs text-neutral-400 font-light">{t.checkoutSubtitle}</p>
-            </div>
+        <div className="px-8 py-6 border-b border-neutral-800/80 flex justify-between items-center">
+          <div>
+            <h3 className="font-serif text-xl text-neutral-100 font-bold">{t.checkoutTitle}</h3>
+            <p className="text-[11px] text-neutral-500 font-light mt-0.5 tracking-wide">{t.checkoutSubtitle}</p>
           </div>
           <button
             onClick={handleClose}
-            className="p-1.5 text-neutral-400 hover:text-white rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-1.5 text-neutral-600 hover:text-neutral-200 transition-colors cursor-pointer"
+            aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Modal Content */}
-        <div className="p-6">
+        <div className="px-8 py-6">
           {successOrder ? (
-            /* Order Success View */
-            <div className="py-8 text-center space-y-6">
-              <div className="inline-flex p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 animate-bounce">
-                <CheckCircle2 className="w-12 h-12" />
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif text-2xl text-gold font-bold">{t.orderSuccessTitle}</h4>
-                <p className="text-sm text-neutral-300 max-w-md mx-auto">{t.orderSuccessDesc}</p>
+            /* ── Order Success View ── */
+            <div className="py-10 text-center space-y-8 animate-fadeInScale">
+              {/* Success line indicator */}
+              <div className="flex items-center justify-center gap-4">
+                <div className="flex-1 h-px bg-neutral-800 max-w-[80px]" />
+                <div className="w-12 h-px bg-gold" />
+                <div className="flex-1 h-px bg-neutral-800 max-w-[80px]" />
               </div>
 
-              <div className="p-4 bg-neutral-900/90 rounded-xl border border-neutral-800 text-xs space-y-2 max-w-sm mx-auto">
-                <div className="flex justify-between text-neutral-400">
+              <div className="space-y-3">
+                <h4 className="font-serif text-3xl text-neutral-100 font-bold tracking-tight">
+                  {t.orderReceivedTitle}
+                </h4>
+                <p className="text-sm text-neutral-400 max-w-sm mx-auto font-light leading-relaxed">
+                  {t.orderReceivedDesc}
+                </p>
+              </div>
+
+              <div className="border border-neutral-800 p-5 text-xs space-y-3 max-w-xs mx-auto">
+                <div className="flex justify-between text-neutral-500 uppercase tracking-widest text-[10px]">
                   <span>{t.orderIdLabel}</span>
-                  <span className="font-mono text-gold font-bold">{successOrder.orderId}</span>
+                  <span className="font-mono text-gold tracking-normal">{successOrder.orderId.slice(-8).toUpperCase()}</span>
                 </div>
+                <div className="h-px bg-neutral-800" />
                 <div className="flex justify-between text-neutral-400">
-                  <span>{t.cartTotal}:</span>
-                  <span className="font-bold text-neutral-100">{successOrder.total} {t.priceCurrency}</span>
+                  <span className="uppercase tracking-widest text-[10px]">{t.cartTotal}</span>
+                  <span className="font-semibold text-neutral-100">{successOrder.total} {t.priceCurrency}</span>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-                <a
-                  href={generateWhatsAppMessage()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-gold px-6 py-3 text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>{t.whatsappBtn}</span>
-                </a>
-                <button
-                  onClick={handleClose}
-                  className="px-6 py-3 border border-neutral-700 hover:border-neutral-500 text-neutral-300 text-xs font-semibold rounded-xl transition-colors cursor-pointer"
-                >
-                  {t.closeBtn}
-                </button>
-              </div>
+              <button
+                onClick={handleClose}
+                className="inline-block px-8 py-3 border border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-neutral-100 text-[10px] font-semibold uppercase tracking-[0.25em] transition-all duration-300 cursor-pointer"
+              >
+                {t.closeBtn}
+              </button>
             </div>
           ) : (
-            /* Checkout Form */
-            <form onSubmit={handleSubmit} className="space-y-4">
+            /* ── Checkout Form ── */
+            <form onSubmit={handleSubmit} className="space-y-5">
               {errorMsg && (
-                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
+                <div className="p-3 border border-red-900/50 bg-red-950/20 text-red-400 text-xs tracking-wide">
                   {errorMsg}
                 </div>
               )}
 
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1">
+              <div className="space-y-4">
+                {/* Name */}
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-semibold text-neutral-500 uppercase tracking-[0.2em]">
                     {t.fullNameLabel} *
                   </label>
                   <input
@@ -177,12 +161,13 @@ export default function CheckoutModal() {
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder={t.fullNamePlaceholder}
-                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 focus:border-gold rounded-xl text-sm text-neutral-100 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-900/60 border border-neutral-800 focus:border-gold/60 text-sm text-neutral-100 placeholder:text-neutral-700 focus:outline-none transition-colors duration-300"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1">
+                {/* Phone */}
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-semibold text-neutral-500 uppercase tracking-[0.2em]">
                     {t.phoneLabel} *
                   </label>
                   <input
@@ -191,12 +176,13 @@ export default function CheckoutModal() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder={t.phonePlaceholder}
-                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 focus:border-gold rounded-xl text-sm text-neutral-100 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-900/60 border border-neutral-800 focus:border-gold/60 text-sm text-neutral-100 placeholder:text-neutral-700 focus:outline-none transition-colors duration-300"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1">
+                {/* Address */}
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-semibold text-neutral-500 uppercase tracking-[0.2em]">
                     {t.addressLabel}
                   </label>
                   <input
@@ -204,12 +190,13 @@ export default function CheckoutModal() {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder={t.addressPlaceholder}
-                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 focus:border-gold rounded-xl text-sm text-neutral-100 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-900/60 border border-neutral-800 focus:border-gold/60 text-sm text-neutral-100 placeholder:text-neutral-700 focus:outline-none transition-colors duration-300"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1">
+                {/* Notes */}
+                <div className="space-y-1.5">
+                  <label className="block text-[10px] font-semibold text-neutral-500 uppercase tracking-[0.2em]">
                     {t.notesLabel}
                   </label>
                   <textarea
@@ -217,51 +204,49 @@ export default function CheckoutModal() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder={t.notesPlaceholder}
-                    className="w-full px-4 py-2.5 bg-neutral-900 border border-neutral-800 focus:border-gold rounded-xl text-sm text-neutral-100 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-900/60 border border-neutral-800 focus:border-gold/60 text-sm text-neutral-100 placeholder:text-neutral-700 focus:outline-none transition-colors duration-300 resize-none"
                   />
                 </div>
               </div>
 
-              {/* Order Breakdown Brief */}
-              <div className="p-4 bg-neutral-900/60 rounded-xl border border-neutral-800 space-y-2 text-xs">
-                <h5 className="font-semibold text-gold uppercase tracking-wider">{t.orderSummaryTitle}</h5>
-                <div className="max-h-28 overflow-y-auto space-y-1 pr-1">
+              {/* Order Summary */}
+              <div className="border border-neutral-800 p-4 space-y-3">
+                <h5 className="text-[10px] font-semibold text-neutral-500 uppercase tracking-[0.2em]">
+                  {t.orderSummaryTitle}
+                </h5>
+                <div className="max-h-28 overflow-y-auto space-y-1.5 pr-1">
                   {cart.map((ci) => (
-                    <div key={ci.dish._id} className="flex justify-between text-neutral-300">
+                    <div key={ci.dish._id} className="flex justify-between text-xs text-neutral-400">
                       <span className="truncate max-w-[200px]">
-                        {ci.quantity}x {ci.dish.name}
+                        {ci.quantity} × {ci.dish.name}
                       </span>
-                      <span className="font-medium text-neutral-100">
+                      <span className="font-medium text-neutral-300 shrink-0 ml-2">
                         {ci.dish.price * ci.quantity} {t.priceCurrency}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-neutral-800 pt-2 flex justify-between font-bold text-sm text-gold">
-                  <span>{t.cartTotal}:</span>
-                  <span>
-                    {subtotal} {t.priceCurrency}
-                  </span>
+                <div className="border-t border-neutral-800 pt-2.5 flex justify-between text-sm">
+                  <span className="text-[10px] uppercase tracking-widest text-neutral-500">{t.cartTotal}</span>
+                  <span className="font-bold text-gold">{subtotal} {t.priceCurrency}</span>
                 </div>
               </div>
 
-              {/* Actions */}
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full btn-gold py-3.5 text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg disabled:opacity-50"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>{t.processingOrder}</span>
-                    </>
-                  ) : (
-                    <span>{t.confirmOrderBtn}</span>
-                  )}
-                </button>
-              </div>
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full btn-gold py-4 text-[10px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 cursor-pointer shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded-none"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>{t.processingOrder}</span>
+                  </>
+                ) : (
+                  <span>{t.confirmOrderBtn}</span>
+                )}
+              </button>
             </form>
           )}
         </div>

@@ -106,7 +106,7 @@ html:not(.dark) .glass-nav {
   box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
 }
 
-/* Custom Gold Text Glow */
+/* Custom Gold Text */
 .text-gold {
   color: #d4af37;
 }
@@ -123,6 +123,11 @@ html:not(.dark) .glass-nav {
   background: linear-gradient(90deg, transparent 0%, #d4af37 50%, transparent 100%);
 }
 
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+/* Standard fade in */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -134,6 +139,7 @@ html:not(.dark) .glass-nav {
   }
 }
 
+/* Slide up */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -145,6 +151,48 @@ html:not(.dark) .glass-nav {
   }
 }
 
+/* Hero background slow zoom — cinematic, premium */
+@keyframes heroZoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+/* Order success scale-in — replaces bouncing icon */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Subtle scroll indicator bounce */
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+/* Card lift hover */
+@keyframes cardLift {
+  to {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+}
+
 .animate-fadeIn {
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -153,17 +201,31 @@ html:not(.dark) .glass-nav {
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Custom Gold Scrollbar */
+.animate-hero-zoom {
+  animation: heroZoom 20s ease-in-out forwards;
+}
+
+.animate-fadeInScale {
+  animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scroll-bounce {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #0a0a0a;
 }
 ::-webkit-scrollbar-thumb {
   background: #262626;
-  border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 3px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #d4af37;

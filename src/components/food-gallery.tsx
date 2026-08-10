@@ -1,9 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Camera } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
-
 
 const GALLERY_IMAGES = [
   {
@@ -36,36 +34,37 @@ export default function FoodGallery() {
   const { t } = useLanguage()
 
   return (
-    <section className="py-20 bg-black/60 border-t border-gold/10 relative">
-      <div className="max-w-7xl mx-auto px-6 space-y-12">
+    <section className="py-28 border-t border-neutral-800/50 relative">
+      <div className="max-w-7xl mx-auto px-6 space-y-14">
         {/* Header */}
-        <div className="text-center space-y-3">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold uppercase tracking-widest">
-            <Camera className="w-3.5 h-3.5" />
+        <div className="text-center space-y-4">
+          <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.3em] text-gold/80">
             {t.galleryTag}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-neutral-100 font-bold">{t.galleryTitle}</h2>
-          <div className="w-16 h-1 bg-gold rounded-full mx-auto" />
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-neutral-100">{t.galleryTitle}</h2>
+          <div className="w-12 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto opacity-60" />
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-800/20">
           {GALLERY_IMAGES.map((img, idx) => (
             <div
               key={idx}
-              className="relative h-64 sm:h-72 rounded-2xl overflow-hidden border border-neutral-800 hover:border-gold/50 transition-all duration-300 group shadow-lg cursor-pointer"
+              className="relative h-64 sm:h-72 overflow-hidden group cursor-pointer"
             >
               <Image
                 src={img.url}
                 alt={img.title}
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                sizes="(max-width: 768px) 50vw, 33vw"
+                loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <div>
-                  <h4 className="font-serif text-lg text-gold font-bold">{img.title}</h4>
-                  <p className="text-xs text-neutral-300">@lumiere_restaurant</p>
-                </div>
+              {/* Hover overlay — title only, no social handle */}
+              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-6">
+                <h4 className="font-serif text-lg text-white font-bold translate-y-3 group-hover:translate-y-0 transition-transform duration-400">
+                  {img.title}
+                </h4>
               </div>
             </div>
           ))}

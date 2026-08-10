@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { Sparkles, Plus, Eye, Flame } from 'lucide-react'
+import { Plus, Eye } from 'lucide-react'
 import { MenuItemData } from '@/sanity/lib/client'
 import { useLanguage } from '@/context/LanguageContext'
 import { useCart } from '@/context/CartContext'
@@ -10,7 +10,6 @@ import { useCart } from '@/context/CartContext'
 interface CrowdFavoritesProps {
   items: MenuItemData[]
   onSelectDish: (dish: MenuItemData) => void
-  onOrderDish?: (dish: MenuItemData) => void
 }
 
 export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesProps) {
@@ -30,37 +29,42 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
   const filteredItems =
     activeCategory === 'all' ? items : items.filter((item) => item.category === activeCategory)
 
-  const getBadgeTranslation = (badge?: string, isPopular?: boolean, isChefsChoice?: boolean) => {
+  const getBadgeText = (badge?: string, isPopular?: boolean, isChefsChoice?: boolean) => {
     if (badge === 'Popular' || isPopular) return t.badgePopular
     if (badge === "Chef's Choice" || isChefsChoice) return t.badgeChefsChoice
     if (badge === 'House Special') return t.badgeHouseSpecial
     if (badge === 'New') return t.badgeNew
-    return t.badgeLimited
+    if (badge) return t.badgeLimited
+    return null
   }
 
   return (
-    <section id="menu" className="py-20 relative bg-black/40">
-      <div className="max-w-7xl mx-auto px-6 space-y-12">
+    <section id="menu" className="py-28 relative">
+      <div className="max-w-7xl mx-auto px-6 space-y-14">
         {/* Section Header */}
-        <div className="text-center space-y-3">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-semibold uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5" />
-            {t.menuHeadingTitle}
+        <div className="text-center space-y-4">
+          <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.3em] text-gold/80">
+            {t.menuHeadingTag}
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-neutral-100">{t.menuHeadingTitle}</h2>
-          <p className="text-sm text-neutral-400 max-w-xl mx-auto font-light">{t.menuHeadingSubtitle}</p>
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-neutral-100">
+            {t.menuHeadingTitle}
+          </h2>
+          <div className="w-12 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto opacity-60" />
+          <p className="text-sm text-neutral-400 max-w-xl mx-auto font-light leading-relaxed">
+            {t.menuHeadingSubtitle}
+          </p>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 border-b border-neutral-800 pb-4">
+        {/* Category Filter */}
+        <div className="flex flex-wrap items-center justify-center gap-2">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+              className={`px-5 py-2 text-[10px] font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer border ${
                 activeCategory === cat.id
-                  ? 'bg-gold text-black shadow-lg shadow-gold/20'
-                  : 'bg-neutral-900/60 border border-neutral-800 text-neutral-300 hover:border-gold/40 hover:text-gold'
+                  ? 'border-gold text-gold bg-gold/8'
+                  : 'border-neutral-800 text-neutral-500 hover:border-neutral-600 hover:text-neutral-300'
               }`}
             >
               {cat.label}
@@ -69,64 +73,65 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
         </div>
 
         {/* Dishes Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-800/30">
           {filteredItems.map((dish) => {
-            const badgeText = getBadgeTranslation(dish.badge, dish.isPopular, dish.isChefsChoice)
+            const badgeText = getBadgeText(dish.badge, dish.isPopular, dish.isChefsChoice)
 
             return (
               <div
                 key={dish._id}
-                className="group relative bg-[#121212] border border-neutral-800 hover:border-gold/50 rounded-2xl overflow-hidden transition-all duration-300 shadow-xl flex flex-col justify-between"
+                className="group relative bg-[#0e0e0e] hover:bg-[#121212] transition-all duration-500 flex flex-col"
               >
                 {/* Dish Image */}
-                <div className="relative h-60 w-full overflow-hidden bg-neutral-900">
+                <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
                   <Image
                     src={dish.imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947'}
                     alt={dish.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-transparent to-transparent opacity-60" />
 
-                  {/* Badge */}
+                  {/* Badge — text only, minimal */}
                   {badgeText && (
-                    <div className="absolute top-4 left-4 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gold/90 text-black text-[11px] font-extrabold uppercase tracking-wider shadow-md">
-                      <Flame className="w-3 h-3" />
-                      <span>{badgeText}</span>
+                    <div className="absolute top-4 left-4 px-2.5 py-1 bg-gold text-black text-[9px] font-bold uppercase tracking-widest">
+                      {badgeText}
                     </div>
                   )}
-
-                  {/* Price Tag in DA */}
-                  <div className="absolute bottom-4 right-4 px-3.5 py-1.5 rounded-xl glass-panel border border-gold/30 text-gold font-bold text-base shadow-lg">
-                    {dish.price} {t.priceCurrency}
-                  </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <h3 className="font-serif text-xl font-bold text-neutral-100 group-hover:text-gold transition-colors">
-                      {dish.name}
-                    </h3>
-                    <p className="text-xs text-neutral-400 font-light line-clamp-2 leading-relaxed">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="font-serif text-lg font-bold text-neutral-100 group-hover:text-gold transition-colors duration-300 leading-snug">
+                        {dish.name}
+                      </h3>
+                      <span className="text-gold font-semibold text-sm shrink-0 mt-0.5">
+                        {dish.price} {t.priceCurrency}
+                      </span>
+                    </div>
+                    <p className="text-xs text-neutral-500 font-light line-clamp-2 leading-relaxed">
                       {dish.description}
                     </p>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="pt-4 border-t border-neutral-800/80 flex items-center gap-3">
+                  {/* Action Row */}
+                  <div className="pt-2 border-t border-neutral-800/60 flex items-center gap-2">
                     <button
                       onClick={() => onSelectDish(dish)}
-                      className="p-3 border border-neutral-800 hover:border-gold/40 text-neutral-400 hover:text-gold rounded-xl transition-colors cursor-pointer"
+                      className="p-2.5 border border-neutral-800 hover:border-neutral-600 text-neutral-600 hover:text-neutral-300 transition-all duration-300 cursor-pointer"
                       title={t.viewDetails}
+                      aria-label={t.viewDetails}
                     >
-                      <Eye className="w-4 h-4" />
+                      <Eye className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => addToCart(dish)}
-                      className="flex-1 btn-gold py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-gold/30 hover:border-gold hover:bg-gold/10 text-gold text-[10px] font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer"
                     >
-                      <Plus className="w-4 h-4" />
+                      <Plus className="w-3.5 h-3.5" />
                       <span>{t.addToCart}</span>
                     </button>
                   </div>
