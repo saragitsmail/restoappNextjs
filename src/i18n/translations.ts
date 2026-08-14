@@ -1,11 +1,10 @@
-export type Language = 'en' | 'fr' | 'ar'
+export type Language = 'en' | 'fr'
 
 export interface TranslationDictionary {
   // Navigation & Brand
   brandName: string
   navHome: string
   navMenu: string
-  navAbout: string
   navReviews: string
   navContact: string
   navOrderNow: string
@@ -40,6 +39,7 @@ export interface TranslationDictionary {
   priceCurrency: string
   pairingTitle: string
   ingredientsTitle: string
+  quantityLabel: string
 
   // Cart Drawer
   cartHeading: string
@@ -72,18 +72,6 @@ export interface TranslationDictionary {
   orderIdLabel: string
   closeBtn: string
 
-  // Story / About Section
-  aboutHeadingTag: string
-  aboutHeadingTitle: string
-  aboutParagraph1: string
-  aboutParagraph2: string
-  aboutFeature1Title: string
-  aboutFeature1Desc: string
-  aboutFeature2Title: string
-  aboutFeature2Desc: string
-  aboutFeature3Title: string
-  aboutFeature3Desc: string
-
   // Reviews
   reviewsTag: string
   reviewsTitle: string
@@ -96,10 +84,6 @@ export interface TranslationDictionary {
   review3Author: string
   review3Text: string
   review3Role: string
-
-  // Gallery
-  galleryTag: string
-  galleryTitle: string
 
   // Contact Section
   contactTag: string
@@ -122,7 +106,6 @@ export const translations: Record<Language, TranslationDictionary> = {
     brandName: 'LUMIÈRE',
     navHome: 'Home',
     navMenu: 'Menu',
-    navAbout: 'Our Story',
     navReviews: 'Reviews',
     navContact: 'Location',
     navOrderNow: 'Order Now',
@@ -130,7 +113,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     cartTitle: 'Your Cart',
 
     heroTitle: 'LUMIÈRE',
-    heroTagline: 'Fine dining, delivered with intention.',
+    heroTagline: 'Haute Gastronomie & Dining Experience',
     heroCtaMenu: 'View Menu',
 
     catAll: 'All',
@@ -145,94 +128,78 @@ export const translations: Record<Language, TranslationDictionary> = {
     badgeNew: 'New',
     badgeLimited: 'Limited',
 
-    menuHeadingTag: 'Our Menu',
-    menuHeadingTitle: 'Curated Dishes',
+    menuHeadingTag: 'Selection',
+    menuHeadingTitle: 'Curated Menu',
     menuHeadingSubtitle:
-      'Each plate is composed with precision — seasonal produce, prime ingredients, and time-honed technique.',
+      'Composed with seasonal produce, prime ingredients, and time-honored technique.',
     addToCart: 'Add to Order',
     viewDetails: 'Details',
     priceCurrency: 'DA',
-    pairingTitle: 'Sommelier Pairing',
+    pairingTitle: 'Chef\'s Culinary Pairing',
     ingredientsTitle: 'Ingredients',
+    quantityLabel: 'Quantity',
 
-    cartHeading: 'Your Order',
-    cartEmpty: 'Your cart is empty. Browse the menu to begin.',
+    cartHeading: 'Your Selection',
+    cartEmpty: 'Your selection is empty. Explore our menu to begin.',
     cartSubtotal: 'Subtotal',
     cartDeliveryFee: 'Delivery',
-    cartDeliveryFree: 'Free',
+    cartDeliveryFree: 'Complimentary',
     cartTotal: 'Total',
-    cartCheckoutBtn: 'Checkout',
+    cartCheckoutBtn: 'Place Order',
     cartClearBtn: 'Clear',
 
     checkoutTitle: 'Complete Your Order',
-    checkoutSubtitle: 'Enter your details and we will take care of the rest.',
+    checkoutSubtitle: 'Provide your contact details and our team will handle the rest.',
     fullNameLabel: 'Full Name',
     fullNamePlaceholder: 'e.g. Yacine Benali',
     phoneLabel: 'Phone Number',
     phonePlaceholder: '0550 12 34 56',
     addressLabel: 'Delivery Address',
     addressPlaceholder: 'Street, District, Algiers',
-    notesLabel: 'Notes (Optional)',
-    notesPlaceholder: 'Dietary preferences, special requests...',
+    notesLabel: 'Special Notes (Optional)',
+    notesPlaceholder: 'Dietary preferences or delivery notes...',
     orderSummaryTitle: 'Order Summary',
-    confirmOrderBtn: 'Place Order',
-    processingOrder: 'Processing...',
+    confirmOrderBtn: 'Confirm & Send Order',
+    processingOrder: 'Transmitting...',
 
     orderReceivedTitle: 'Order Received',
     orderReceivedDesc:
-      'Thank you. Your order has been confirmed and our kitchen is preparing it now.',
-    orderIdLabel: 'Reference',
-    closeBtn: 'Continue',
+      'Thank you. Your order has been registered and is being prepared with utmost care.',
+    orderIdLabel: 'Reference ID',
+    closeBtn: 'Return to Menu',
 
-    aboutHeadingTag: 'Our Story',
-    aboutHeadingTitle: 'Where Craft Meets Table',
-    aboutParagraph1:
-      'Lumière was founded on a simple conviction: great food should not require a reservation weeks in advance.',
-    aboutParagraph2:
-      'Every plate is crafted from ethically sourced organic produce, prime cut meats, and fresh Mediterranean seafood — prepared with the same rigour as any acclaimed dining room.',
-    aboutFeature1Title: 'Premium Ingredients',
-    aboutFeature1Desc: 'Handpicked daily from trusted local producers.',
-    aboutFeature2Title: 'Master Chefs',
-    aboutFeature2Desc: 'Prepared by culinary experts with uncompromising standards.',
-    aboutFeature3Title: 'Express Delivery',
-    aboutFeature3Desc: 'Delivered hot in eco-insulated packaging.',
-
-    reviewsTag: 'Guest Reviews',
-    reviewsTitle: 'What Our Guests Say',
+    reviewsTag: 'Testimonials',
+    reviewsTitle: 'Guest Reflections',
     review1Author: 'Kareem M.',
     review1Text:
-      'The Wagyu Ribeye was cooked to absolute perfection. Exceptional presentation and surprisingly fast delivery.',
-    review1Role: 'Food Critic & Regular Guest',
+      'The Wagyu Ribeye was executed to absolute perfection. Exceptional presentation and remarkable delivery.',
+    review1Role: 'Food Critic',
     review2Author: 'Amel B.',
     review2Text:
-      'The finest delivery dining experience in Algiers. The dark chocolate sphere is extraordinary.',
+      'The finest delivery dining experience in Algiers. The Valrhona dark chocolate sphere is extraordinary.',
     review2Role: 'Verified Guest',
     review3Author: 'Sofiane K.',
     review3Text:
-      'A seamless ordering experience. The multilingual interface is a thoughtful touch. Highly recommended.',
+      'A seamless dining experience. The attention to detail and packaging are incomparable.',
     review3Role: 'Gourmet Enthusiast',
 
-    galleryTag: 'Gallery',
-    galleryTitle: 'The Plate as Canvas',
-
-    contactTag: 'Find Us',
-    contactTitle: 'Location & Hours',
+    contactTag: 'Location & Hours',
+    contactTitle: 'Visit & Reserve',
     addressTitle: 'Address',
     addressText: 'Boulevard 11 December 1960, El Biar, Algiers',
     phoneTitle: 'Telephone',
     phoneText: '+213 (0) 550 99 88 77',
-    hoursTitle: 'Opening Hours',
-    hoursText: 'Monday — Sunday: 11:00 — 23:30',
-    contactCallBtn: 'Call to Reserve',
+    hoursTitle: 'Hours',
+    hoursText: 'Every day: 11:00 — 23:30',
+    contactCallBtn: 'Reserve a Table',
 
-    footerRights: '© 2026 Lumière Restaurant. All rights reserved.',
-    footerDesc: 'Fine dining & express delivery — connected to Sanity CMS.',
+    footerRights: '© 2026 Lumière Restaurant.',
+    footerDesc: 'Haute gastronomy & express delivery service.',
   },
   fr: {
     brandName: 'LUMIÈRE',
     navHome: 'Accueil',
-    navMenu: 'Carte',
-    navAbout: 'Notre Histoire',
+    navMenu: 'Localisation et Réservation',
     navReviews: 'Avis',
     navContact: 'Accès',
     navOrderNow: 'Commander',
@@ -240,8 +207,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     cartTitle: 'Votre Panier',
 
     heroTitle: 'LUMIÈRE',
-    heroTagline: 'La haute gastronomie, livrée avec soin.',
-    heroCtaMenu: 'Voir la Carte',
+    heroTagline: 'Haute Gastronomie & Expérience Culinaire',
+    heroCtaMenu: 'Voire le menu et Commander',
 
     catAll: 'Tous',
     catStarters: 'Entrées',
@@ -255,197 +222,72 @@ export const translations: Record<Language, TranslationDictionary> = {
     badgeNew: 'Nouveau',
     badgeLimited: 'Limité',
 
-    menuHeadingTag: 'Notre Carte',
+    menuHeadingTag: 'Sélection',
     menuHeadingTitle: 'Plats Sélectionnés',
     menuHeadingSubtitle:
-      'Chaque assiette est composée avec précision — produits de saison, ingrédients d'exception et technique maîtrisée.',
+      'Chaque création est composée avec précision — produits de saison et ingrédients d\'exception.',
     addToCart: 'Ajouter au Panier',
     viewDetails: 'Détails',
     priceCurrency: 'DA',
-    pairingTitle: 'Accord Mets & Vins',
+    pairingTitle: 'Accord Culinaire Signature',
     ingredientsTitle: 'Ingrédients',
+    quantityLabel: 'Quantité',
 
-    cartHeading: 'Votre Commande',
-    cartEmpty: 'Votre panier est vide. Parcourez la carte pour commencer.',
+    cartHeading: 'Votre Sélection',
+    cartEmpty: 'Votre panier est vide. Parcourez la carte pour composer votre repas.',
     cartSubtotal: 'Sous-total',
     cartDeliveryFee: 'Livraison',
-    cartDeliveryFree: 'Gratuite',
+    cartDeliveryFree: 'Offerte',
     cartTotal: 'Total',
-    cartCheckoutBtn: 'Commander',
+    cartCheckoutBtn: 'Valider la Commande',
     cartClearBtn: 'Vider',
 
     checkoutTitle: 'Finaliser la Commande',
-    checkoutSubtitle: 'Renseignez vos coordonnées et nous nous occupons du reste.',
+    checkoutSubtitle: 'Renseignez vos coordonnées et notre équipe s\'occupe du reste.',
     fullNameLabel: 'Nom Complet',
     fullNamePlaceholder: 'ex. Yacine Benali',
     phoneLabel: 'Téléphone',
     phonePlaceholder: '0550 12 34 56',
     addressLabel: 'Adresse de Livraison',
     addressPlaceholder: 'Rue, Quartier, Alger',
-    notesLabel: 'Notes (Optionnel)',
-    notesPlaceholder: 'Préférences alimentaires, demandes spéciales...',
-    orderSummaryTitle: 'Récapitulatif',
-    confirmOrderBtn: 'Valider la Commande',
-    processingOrder: 'En cours...',
+    notesLabel: 'Notes Particulières (Optionnel)',
+    notesPlaceholder: 'Préférences alimentaires ou précisions d\'accès...',
+    orderSummaryTitle: 'Récapitulatif de la Commande',
+    confirmOrderBtn: 'Confirmer la Commande',
+    processingOrder: 'Transmission...',
 
     orderReceivedTitle: 'Commande Reçue',
     orderReceivedDesc:
-      'Merci. Votre commande est confirmée et notre cuisine la prépare dès maintenant.',
+      'Merci. Votre commande a bien été enregistrée et notre cuisine la prépare avec le plus grand soin.',
     orderIdLabel: 'Référence',
-    closeBtn: 'Continuer',
+    closeBtn: 'Retour au Menu',
 
-    aboutHeadingTag: 'Notre Histoire',
-    aboutHeadingTitle: 'Là Où le Savoir-Faire Rencontre la Table',
-    aboutParagraph1:
-      'Lumière est né d'une conviction simple : la grande cuisine ne devrait pas nécessiter des semaines de réservation.',
-    aboutParagraph2:
-      'Chaque assiette est réalisée à partir de produits biologiques sélectionnés, de viandes d'exception et de fruits de mer frais — préparée avec la même rigueur qu'une grande salle.',
-    aboutFeature1Title: 'Ingrédients Premium',
-    aboutFeature1Desc: 'Sélectionnés chaque matin auprès des meilleurs producteurs.',
-    aboutFeature2Title: 'Grands Chefs',
-    aboutFeature2Desc: 'Cuisinés par des experts aux exigences irréprochables.',
-    aboutFeature3Title: 'Livraison Express',
-    aboutFeature3Desc: 'Livrée chaude dans des emballages isothermes écologiques.',
-
-    reviewsTag: 'Avis Clients',
-    reviewsTitle: 'Ce Que Disent Nos Hôtes',
+    reviewsTag: 'Témoignages',
+    reviewsTitle: 'Ce Que Disent Nos Clients',
     review1Author: 'Kareem M.',
     review1Text:
-      'Le Ribeye de Wagyu était cuit à la perfection. Présentation remarquable et livraison étonnamment rapide.',
+      'Le Ribeye de Wagyu était cuit à la perfection. Présentation remarquable et service très réactif.',
     review1Role: 'Critique Gastronomique',
     review2Author: 'Amel B.',
     review2Text:
-      'La meilleure expérience de livraison gastronomique d'Alger. La sphère au chocolat est extraordinaire.',
+      'La meilleure expérience culinaire livrée à Alger. La sphère en chocolat est juste extraordinaire.',
     review2Role: 'Cliente Vérifiée',
     review3Author: 'Sofiane K.',
     review3Text:
-      'Une expérience de commande fluide. L'interface multilingue est une attention délicate. Hautement recommandé.',
+      'Une expérience de commande fluide. Le soin apporté aux détails et au packaging est incomparable.',
     review3Role: 'Amateur de Gastronomie',
 
-    galleryTag: 'Galerie',
-    galleryTitle: 'L\'Assiette comme Toile',
-
-    contactTag: 'Nous Trouver',
-    contactTitle: 'Adresse & Horaires',
+    contactTag: 'Accès & Horaires',
+    contactTitle: 'Nous Trouver',
     addressTitle: 'Adresse',
     addressText: 'Boulevard du 11 Décembre 1960, El Biar, Alger',
     phoneTitle: 'Téléphone',
     phoneText: '+213 (0) 550 99 88 77',
     hoursTitle: 'Horaires',
-    hoursText: 'Lundi — Dimanche : 11h00 — 23h30',
-    contactCallBtn: 'Appeler pour Réserver',
+    hoursText: 'Tous les jours : 11h00 — 23h30',
+    contactCallBtn: 'Réserver une Table',
 
-    footerRights: '© 2026 Lumière Restaurant. Tous droits réservés.',
-    footerDesc: 'Haute gastronomie & livraison express — connecté à Sanity CMS.',
-  },
-  ar: {
-    brandName: 'لوميير',
-    navHome: 'الرئيسية',
-    navMenu: 'القائمة',
-    navAbout: 'قصتنا',
-    navReviews: 'آراء',
-    navContact: 'الموقع',
-    navOrderNow: 'اطلب الآن',
-    navStudio: 'استوديو سانيتي',
-    cartTitle: 'سلة الطلبات',
-
-    heroTitle: 'لوميير',
-    heroTagline: 'مطبخ راقٍ، يُقدَّم بعناية.',
-    heroCtaMenu: 'استعرض القائمة',
-
-    catAll: 'الكل',
-    catStarters: 'مقبلات',
-    catMains: 'رئيسية',
-    catSignature: 'خاصة',
-    catDesserts: 'حلويات',
-
-    badgePopular: 'الأكثر طلباً',
-    badgeChefsChoice: 'اختيار الشيف',
-    badgeHouseSpecial: 'طبق البيت',
-    badgeNew: 'جديد',
-    badgeLimited: 'محدود',
-
-    menuHeadingTag: 'قائمتنا',
-    menuHeadingTitle: 'أطباق مختارة',
-    menuHeadingSubtitle:
-      'كل طبق مُعدّ بدقة — منتجات موسمية ومكونات فاخرة وتقنية متقنة.',
-    addToCart: 'إضافة إلى الطلب',
-    viewDetails: 'التفاصيل',
-    priceCurrency: 'د.ج',
-    pairingTitle: 'المشروب المقترح',
-    ingredientsTitle: 'المكونات',
-
-    cartHeading: 'طلبك',
-    cartEmpty: 'سلتك فارغة. تصفح القائمة للبدء.',
-    cartSubtotal: 'المجموع الفرعي',
-    cartDeliveryFee: 'التوصيل',
-    cartDeliveryFree: 'مجاني',
-    cartTotal: 'الإجمالي',
-    cartCheckoutBtn: 'إتمام الطلب',
-    cartClearBtn: 'تفريغ',
-
-    checkoutTitle: 'إتمام الطلب',
-    checkoutSubtitle: 'أدخل بياناتك ونحن نتولى الباقي.',
-    fullNameLabel: 'الاسم الكامل',
-    fullNamePlaceholder: 'مثال: ياسين بن علي',
-    phoneLabel: 'رقم الهاتف',
-    phonePlaceholder: '0550 12 34 56',
-    addressLabel: 'عنوان التوصيل',
-    addressPlaceholder: 'الشارع، الحي، الجزائر',
-    notesLabel: 'ملاحظات (اختياري)',
-    notesPlaceholder: 'تفضيلات غذائية، طلبات خاصة...',
-    orderSummaryTitle: 'ملخص الطلب',
-    confirmOrderBtn: 'تأكيد الطلب',
-    processingOrder: 'جاري المعالجة...',
-
-    orderReceivedTitle: 'تم استلام طلبك',
-    orderReceivedDesc:
-      'شكراً. تم تأكيد طلبك وطهاتنا يقومون بتحضيره الآن.',
-    orderIdLabel: 'المرجع',
-    closeBtn: 'متابعة',
-
-    aboutHeadingTag: 'قصتنا',
-    aboutHeadingTitle: 'حيث تلتقي الحرفة بالمائدة',
-    aboutParagraph1:
-      'تأسست لوميير على قناعة بسيطة: الطعام الرفيع لا ينبغي أن يستلزم حجزاً لأسابيع مسبقاً.',
-    aboutParagraph2:
-      'كل طبق يُعدّ من منتجات عضوية منتقاة ولحوم فاخرة وأسماك طازجة — بنفس الدقة المتبعة في أرقى المطاعم.',
-    aboutFeature1Title: 'مكونات فاخرة',
-    aboutFeature1Desc: 'مختارة يومياً من أفضل المنتجين المحليين.',
-    aboutFeature2Title: 'طهاة متميزون',
-    aboutFeature2Desc: 'بأيدي خبراء لا يساومون على الجودة.',
-    aboutFeature3Title: 'توصيل سريع',
-    aboutFeature3Desc: 'تصلك ساخنة في تغليف حراري صديق للبيئة.',
-
-    reviewsTag: 'آراء ضيوفنا',
-    reviewsTitle: 'ماذا يقول ضيوفنا',
-    review1Author: 'كريم م.',
-    review1Text:
-      'طبق الواجيو ريب آي كان مطهواً بإتقان تام. تقديم استثنائي وتوصيل سريع بشكل مدهش.',
-    review1Role: 'ناقد طعام وزبون دائم',
-    review2Author: 'أمل ب.',
-    review2Text:
-      'أفضل تجربة توصيل طعام راقية في الجزائر. كرة الشوكولاتة الداكنة خارقة.',
-    review2Role: 'زبونة معتمدة',
-    review3Author: 'سفيان ك.',
-    review3Text:
-      'تجربة طلب سلسة للغاية. الواجهة متعددة اللغات لمسة لطيفة ومدروسة. أنصح به بشدة.',
-    review3Role: 'عاشق للمأكولات الفاخرة',
-
-    galleryTag: 'المعرض',
-    galleryTitle: 'الطبق كلوحة فنية',
-
-    contactTag: 'الموقع',
-    contactTitle: 'العنوان وساعات العمل',
-    addressTitle: 'العنوان',
-    addressText: 'شارع 11 ديسمبر 1960، الأبيار، الجزائر',
-    phoneTitle: 'الهاتف',
-    phoneText: '+213 (0) 550 99 88 77',
-    hoursTitle: 'ساعات العمل',
-    hoursText: 'الإثنين — الأحد: 11:00 — 23:30',
-    contactCallBtn: 'اتصل للحجز',
-
-    footerRights: '© 2026 مطعم لوميير. جميع الحقوق محفوظة.',
-    footerDesc: 'مطعم فاخر وتوصيل سريع — مرتبط بـ Sanity CMS.',
+    footerRights: '© 2026 Lumière Restaurant.',
+    footerDesc: 'Haute gastronomie & service de livraison sur-mesure.',
   },
 }

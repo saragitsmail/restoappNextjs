@@ -9,71 +9,72 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full h-screen min-h-[600px] flex flex-col items-center justify-center overflow-hidden"
+      className="relative w-full h-screen min-h-[750px] flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Background Image — slow cinematic zoom */}
+      {/* Hero Background Image — High-End Culinary Dish */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=90&w=2070&auto=format&fit=crop"
-          alt="Lumière fine dining"
+          src="https://images.unsplash.com/photo-1544025162-d76694265947?q=90&w=2560&auto=format&fit=crop"
+          alt="Lumière gourmet dish"
           fill
           priority
-          className="object-cover animate-hero-zoom"
+          className="object-cover object-center animate-hero-zoom filter brightness-[0.55] contrast-[1.1]"
           sizes="100vw"
         />
       </div>
 
-      {/* Dark cinematic overlay — gradient bottom-heavy */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/55 via-black/40 to-black/80" />
-
-      {/* Subtle vignette */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%)',
-        }}
-      />
+      {/* Dark Warm Cinematic Overlay */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#0a0806]/80 via-[#080705]/50 to-[#090807]" />
 
       {/* Hero Content */}
-      <div className="relative z-20 flex flex-col items-center justify-center text-center px-6 space-y-6 select-none">
-        {/* Brand Name */}
-        <h1
-          className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[0.18em] text-white"
-          style={{ textShadow: '0 2px 40px rgba(0,0,0,0.5)' }}
-        >
-          {t.heroTitle}
-        </h1>
+      <div className="relative z-20 flex flex-col items-center justify-center text-center px-6 space-y-8 select-none max-w-4xl mx-auto">
+        {/* Subtitle / Tagline */}
+        <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.45em] text-[#E0C068] animate-fadeIn">
+          Haute Gastronomie & Culinary Arts
+        </span>
 
-        {/* Gold divider line */}
-        <div className="flex items-center gap-4 w-full max-w-xs">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-gold opacity-60" />
-          <div className="w-1.5 h-1.5 rounded-full bg-gold opacity-80" />
-          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-gold opacity-60" />
+        {/* Spectacular Brand Title */}
+        <div className="relative">
+          <h1
+            className="font-serif text-6xl sm:text-8xl md:text-9xl font-bold tracking-[0.22em] text-[#F7F4EF] transition-all duration-700 hover:scale-[1.01] animate-gold-pulse"
+            style={{
+              textShadow:
+                '0 0 40px rgba(224,192,104,0.35), 0 4px 60px rgba(0,0,0,0.9)',
+            }}
+          >
+            {t.heroTitle}
+          </h1>
+          {/* Subtle Metallic Shimmer Glow Effect */}
+          <div className="absolute -inset-x-6 top-1/2 -translate-y-1/2 h-20 bg-gradient-to-r from-transparent via-[#E0C068]/15 to-transparent blur-2xl pointer-events-none" />
+        </div>
+
+        {/* Champagne Gold Accent Line Divider */}
+        <div className="flex items-center gap-4 w-full max-w-xs py-2">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#E0C068] to-transparent opacity-80" />
+          <div className="w-2 h-2 rotate-45 border border-[#E0C068] bg-[#E0C068]/30" />
+          <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#E0C068] to-transparent opacity-80" />
         </div>
 
         {/* Tagline */}
-        <p
-          className="text-sm sm:text-base text-neutral-300 font-light tracking-widest uppercase max-w-md"
-          style={{ letterSpacing: '0.25em' }}
-        >
+        <p className="text-xs sm:text-sm text-[#D8D0C5] font-light tracking-[0.3em] uppercase max-w-lg leading-relaxed">
           {t.heroTagline}
         </p>
 
-        {/* CTA */}
-        <div className="pt-4">
+        {/* CTA Button */}
+        <div className="pt-6">
           <a
             href="#menu"
-            className="inline-block px-10 py-4 border border-gold/60 hover:border-gold hover:bg-gold/10 text-gold hover:text-white text-xs font-semibold uppercase tracking-[0.3em] transition-all duration-500 rounded-none"
+            className="inline-block px-12 py-4 btn-outline-gold text-xs font-bold uppercase tracking-[0.3em] shadow-2xl"
           >
             {t.heroCtaMenu}
           </a>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-scroll-bounce">
-        <div className="w-px h-10 bg-gradient-to-b from-gold/0 via-gold/60 to-gold/0" />
+      {/* Minimal Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-scroll-bounce opacity-80 hover:opacity-100 transition-opacity">
+        <span className="text-[9px] uppercase tracking-[0.35em] text-[#E0C068]">Explore</span>
+        <div className="w-px h-8 bg-gradient-to-b from-[#E0C068] to-transparent" />
       </div>
     </section>
   )

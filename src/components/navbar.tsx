@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ShoppingBag } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 import { useCart } from '@/context/CartContext'
-import { useTheme } from '@/context/ThemeContext'
 import { Language } from '@/i18n/translations'
 
 export default function Navbar() {
@@ -12,13 +11,12 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [langDropdownOpen, setLangDropdownOpen] = useState(false)
 
-  const { lang, setLang, t, isRTL } = useLanguage()
+  const { lang, setLang, t } = useLanguage()
   const { totalItems, setIsCartOpen } = useCart()
-  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      setScrolled(window.scrollY > 30)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -27,56 +25,55 @@ export default function Navbar() {
   const languages: { code: Language; label: string; short: string }[] = [
     { code: 'fr', label: 'Français', short: 'FR' },
     { code: 'en', label: 'English', short: 'EN' },
-    { code: 'ar', label: 'العربية', short: 'AR' },
   ]
 
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
-        scrolled ? 'glass-nav py-3 shadow-xl' : 'bg-transparent py-5'
+        scrolled
+          ? 'bg-[#090806]/92 backdrop-blur-xl py-4 border-b border-[#E0C068]/20 shadow-2xl'
+          : 'bg-gradient-to-b from-[#090806]/90 via-[#090806]/40 to-transparent py-6'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         {/* Brand Logo */}
-        <a href="#home" className="group">
-          <span className="font-serif text-xl md:text-2xl tracking-[0.3em] text-gold font-bold transition-all duration-300 group-hover:text-amber-200">
+        <a href="#home" className="group flex items-center gap-3">
+          <span className="font-serif text-2xl md:text-3xl tracking-[0.25em] text-[#F7F4EF] font-semibold transition-colors duration-300 group-hover:text-[#E0C068]">
             {t.brandName}
           </span>
         </a>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center space-x-10 text-[10px] font-medium uppercase tracking-[0.25em] text-neutral-300">
-          <a href="#home" className="hover:text-gold transition-colors duration-300">
+        <div className="hidden md:flex items-center space-x-12 text-[11px] font-medium uppercase tracking-[0.25em] text-[#D8D0C5]">
+          <a href="#home" className="hover:text-[#E0C068] transition-colors duration-300">
             {t.navHome}
           </a>
-          <a href="#menu" className="hover:text-gold transition-colors duration-300">
+          <a href="#menu" className="hover:text-[#E0C068] transition-colors duration-300">
             {t.navMenu}
           </a>
-          <a href="#about" className="hover:text-gold transition-colors duration-300">
-            {t.navAbout}
-          </a>
-          <a href="#reviews" className="hover:text-gold transition-colors duration-300">
+          <a href="#reviews" className="hover:text-[#E0C068] transition-colors duration-300">
             {t.navReviews}
           </a>
-          <a href="#contact" className="hover:text-gold transition-colors duration-300">
+          <a href="#contact" className="hover:text-[#E0C068] transition-colors duration-300">
             {t.navContact}
           </a>
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {/* Language Switcher */}
           <div className="relative">
             <button
               onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-              className="px-3 py-1.5 border border-neutral-700 hover:border-gold/50 rounded text-[10px] text-neutral-300 hover:text-gold font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer"
+              className="px-3.5 py-1.5 border border-[#E0C068]/30 hover:border-[#E0C068] bg-[#0c0a08]/60 backdrop-blur-md rounded-none text-[10px] text-[#D8D0C5] hover:text-[#E0C068] font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer flex items-center gap-1.5"
               title="Change Language"
             >
-              {lang.toUpperCase()}
+              <span>{lang.toUpperCase()}</span>
+              <span className="text-[8px] text-[#E0C068]">▼</span>
             </button>
 
             {langDropdownOpen && (
-              <div className="absolute top-full right-0 mt-2 w-32 bg-[#141414] border border-neutral-800 rounded shadow-2xl overflow-hidden py-1 z-50 animate-fadeIn">
+              <div className="absolute top-full right-0 mt-2 w-32 bg-[#0e0c0a] border border-[#E0C068]/30 rounded-none shadow-2xl overflow-hidden py-1 z-50 animate-fadeIn">
                 {languages.map((l) => (
                   <button
                     key={l.code}
@@ -84,53 +81,27 @@ export default function Navbar() {
                       setLang(l.code)
                       setLangDropdownOpen(false)
                     }}
-                    className={`w-full px-4 py-2.5 text-[10px] text-left flex items-center justify-between hover:bg-gold/10 transition-colors cursor-pointer tracking-widest uppercase ${
-                      lang === l.code ? 'text-gold font-bold' : 'text-neutral-400'
+                    className={`w-full px-4 py-2.5 text-[10px] text-left flex items-center justify-between hover:bg-[#E0C068]/10 transition-colors cursor-pointer tracking-widest uppercase ${
+                      lang === l.code ? 'text-[#E0C068] font-bold' : 'text-[#B8B0A6]'
                     }`}
                   >
                     <span>{l.label}</span>
-                    <span className="text-[9px] font-bold">{l.short}</span>
+                    <span className="text-[9px] font-bold text-[#E0C068]">{l.short}</span>
                   </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-1.5 border border-neutral-700 hover:border-gold/50 text-neutral-400 hover:text-gold rounded transition-all duration-300 cursor-pointer"
-            title="Toggle Theme"
-            aria-label="Toggle light/dark mode"
-          >
-            {theme === 'dark' ? (
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="5" strokeWidth="1.5" />
-                <line x1="12" y1="1" x2="12" y2="3" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="12" y1="21" x2="12" y2="23" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="1" y1="12" x2="3" y2="12" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="21" y1="12" x2="23" y2="12" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            ) : (
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </button>
-
-          {/* Cart Button */}
+          {/* Cart Trigger Button */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative flex items-center gap-2 px-4 py-1.5 border border-gold/40 hover:border-gold hover:bg-gold/10 text-gold text-[10px] font-semibold uppercase tracking-widest rounded transition-all duration-300 cursor-pointer"
+            className="relative flex items-center gap-2.5 px-4.5 py-2 border border-[#E0C068]/40 hover:border-[#E0C068] bg-[#0c0a08]/60 hover:bg-[#E0C068]/15 text-[#E0C068] text-[10px] font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer backdrop-blur-md"
           >
-            <ShoppingBag className="w-3.5 h-3.5" />
+            <ShoppingBag className="w-4 h-4" />
             <span className="hidden sm:inline">{t.cartTitle}</span>
             {totalItems > 0 && (
-              <span className="w-4 h-4 rounded-full bg-gold text-black text-[9px] font-extrabold flex items-center justify-center">
+              <span className="w-4 h-4 rounded-full bg-[#E0C068] text-[#0a0806] text-[9px] font-extrabold flex items-center justify-center">
                 {totalItems}
               </span>
             )}
@@ -139,30 +110,27 @@ export default function Navbar() {
           {/* Mobile Navigation Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-neutral-300 hover:text-gold p-1.5 transition-colors cursor-pointer"
+            className="md:hidden text-[#D8D0C5] hover:text-[#E0C068] p-2 transition-colors cursor-pointer"
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass-nav border-t border-gold/10 px-6 py-8 flex flex-col space-y-5 text-[11px] uppercase tracking-[0.25em] text-neutral-300 animate-fadeIn">
-          <a href="#home" onClick={() => setMobileMenuOpen(false)} className="hover:text-gold transition-colors py-1">
+        <div className="md:hidden bg-[#090806]/95 backdrop-blur-2xl border-t border-[#E0C068]/20 px-8 py-8 flex flex-col space-y-6 text-[11px] uppercase tracking-[0.25em] text-[#D8D0C5] animate-fadeIn">
+          <a href="#home" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#E0C068] transition-colors py-1">
             {t.navHome}
           </a>
-          <a href="#menu" onClick={() => setMobileMenuOpen(false)} className="hover:text-gold transition-colors py-1">
+          <a href="#menu" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#E0C068] transition-colors py-1">
             {t.navMenu}
           </a>
-          <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-gold transition-colors py-1">
-            {t.navAbout}
-          </a>
-          <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="hover:text-gold transition-colors py-1">
+          <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#E0C068] transition-colors py-1">
             {t.navReviews}
           </a>
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-gold transition-colors py-1">
+          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#E0C068] transition-colors py-1">
             {t.navContact}
           </a>
           <button
@@ -170,9 +138,9 @@ export default function Navbar() {
               setMobileMenuOpen(false)
               setIsCartOpen(true)
             }}
-            className="mt-4 w-full border border-gold/40 text-gold py-3 text-[10px] font-semibold uppercase tracking-widest rounded transition-colors hover:bg-gold/10 cursor-pointer flex items-center justify-center gap-2"
+            className="mt-4 w-full border border-[#E0C068]/50 text-[#E0C068] py-3.5 text-[10px] font-semibold uppercase tracking-widest transition-colors hover:bg-[#E0C068]/15 cursor-pointer flex items-center justify-center gap-2"
           >
-            <ShoppingBag className="w-3.5 h-3.5" />
+            <ShoppingBag className="w-4 h-4" />
             <span>{t.cartTitle} {totalItems > 0 ? `(${totalItems})` : ''}</span>
           </button>
         </div>

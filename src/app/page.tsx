@@ -6,8 +6,6 @@ import Navbar from '@/components/navbar'
 import Hero from '@/components/hero'
 import CrowdFavorites from '@/components/crowd-favorites'
 import MenuSkeleton from '@/components/menu-skeleton'
-import AboutSection from '@/components/about-section'
-import FoodGallery from '@/components/food-gallery'
 import ReviewsSection from '@/components/reviews-section'
 import ContactSection from '@/components/contact-section'
 import CartDrawer from '@/components/cart-drawer'
@@ -33,19 +31,19 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 selection:bg-amber-400 selection:text-black">
-      {/* Canvas / WebGL Animated Background */}
+    <div className="relative min-h-screen bg-[#070707] text-neutral-100 selection:bg-[#D4AF37] selection:text-black">
+      {/* Canvas Animated Ambient Background */}
       <AnimatedBackground />
 
-      {/* Navbar with i18n & Theme Toggles */}
+      {/* Luxury Navbar */}
       <Navbar />
 
-      {/* Main Page Layout */}
+      {/* Main Content */}
       <main className="relative z-10">
-        {/* Hero Section */}
+        {/* Full-Screen Cinematic Hero */}
         <Hero />
 
-        {/* Sanity CMS Menu Cards Grid */}
+        {/* Menu Section with Sanity Data */}
         {loading ? (
           <MenuSkeleton />
         ) : (
@@ -55,32 +53,26 @@ export default function Home() {
           />
         )}
 
-        {/* Restaurant Story & Culinary Heritage */}
-        <AboutSection />
-
-        {/* Instagram Food Gallery */}
-        <FoodGallery />
-
-        {/* Customer Reviews & Star Ratings */}
+        {/* Guest Reflections & Reviews */}
         <ReviewsSection />
 
-        {/* Location, Info, Map & WhatsApp */}
+        {/* Location & Opening Hours */}
         <ContactSection />
       </main>
 
-      {/* Slide-out Cart Drawer */}
+      {/* Cart Drawer */}
       <CartDrawer />
 
-      {/* Checkout Modal & Sanity Submission */}
+      {/* Checkout Modal */}
       <CheckoutModal />
 
-      {/* Product Details Modal */}
+      {/* Dish Details Modal */}
       <ProductDetailsModal
         dish={selectedDish}
         onClose={() => setSelectedDish(null)}
       />
 
-      {/* Mobile Sticky Floating Cart Action */}
+      {/* Mobile Sticky Order Floating Action */}
       <StickyMobileOrder />
 
       {/* Footer */}

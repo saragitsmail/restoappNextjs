@@ -13,11 +13,11 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Language>('fr') // Default French / English / Arabic
+  const [lang, setLangState] = useState<Language>('fr') // Default French
 
   useEffect(() => {
     const savedLang = localStorage.getItem('resto_lang') as Language | null
-    if (savedLang && (savedLang === 'en' || savedLang === 'fr' || savedLang === 'ar')) {
+    if (savedLang && (savedLang === 'en' || savedLang === 'fr')) {
       setLangState(savedLang)
     }
   }, [])
@@ -27,20 +27,20 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('resto_lang', newLang)
   }
 
-  const isRTL = lang === 'ar'
+  const isRTL = false
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = lang
-      document.documentElement.dir = isRTL ? 'rtl' : 'ltr'
+      document.documentElement.dir = 'ltr'
     }
-  }, [lang, isRTL])
+  }, [lang])
 
   const t = translations[lang] || translations.fr
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t, isRTL }}>
-      <div dir={isRTL ? 'rtl' : 'ltr'} className={isRTL ? 'font-arabic' : ''}>
+      <div dir="ltr">
         {children}
       </div>
     </LanguageContext.Provider>

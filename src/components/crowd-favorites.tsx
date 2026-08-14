@@ -38,33 +38,37 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
     return null
   }
 
+  const formatPrice = (price: number) => {
+    return `${price.toLocaleString('fr-FR')} ${t.priceCurrency}`
+  }
+
   return (
-    <section id="menu" className="py-28 relative">
-      <div className="max-w-7xl mx-auto px-6 space-y-14">
+    <section id="menu" className="py-32 relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
         {/* Section Header */}
-        <div className="text-center space-y-4">
-          <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.3em] text-gold/80">
+        <div className="text-center space-y-4 max-w-2xl mx-auto">
+          <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.35em] text-[#E0C068]">
             {t.menuHeadingTag}
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-neutral-100">
+          <h2 className="font-serif text-4xl sm:text-6xl font-bold text-[#F7F4EF] tracking-wide">
             {t.menuHeadingTitle}
           </h2>
-          <div className="w-12 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto opacity-60" />
-          <p className="text-sm text-neutral-400 max-w-xl mx-auto font-light leading-relaxed">
+          <div className="w-16 h-px gold-line mx-auto" />
+          <p className="text-xs sm:text-sm text-[#B8B0A6] font-light leading-relaxed tracking-wider">
             {t.menuHeadingSubtitle}
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        {/* Category Filter Navigation */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2 text-[10px] font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer border ${
+              className={`px-6 py-2.5 text-[10px] font-semibold uppercase tracking-[0.25em] transition-all duration-300 cursor-pointer border ${
                 activeCategory === cat.id
-                  ? 'border-gold text-gold bg-gold/8'
-                  : 'border-neutral-800 text-neutral-500 hover:border-neutral-600 hover:text-neutral-300'
+                  ? 'border-[#E0C068] text-[#E0C068] bg-[#E0C068]/15 shadow-[0_0_20px_rgba(224,192,104,0.2)]'
+                  : 'border-[#E0C068]/20 text-[#B8B0A6] hover:border-[#E0C068]/50 hover:text-white bg-[#0e0c0a]/60 backdrop-blur-md'
               }`}
             >
               {cat.label}
@@ -72,66 +76,72 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
           ))}
         </div>
 
-        {/* Dishes Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-800/30">
+        {/* Menu Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredItems.map((dish) => {
             const badgeText = getBadgeText(dish.badge, dish.isPopular, dish.isChefsChoice)
 
             return (
               <div
                 key={dish._id}
-                className="group relative bg-[#0e0e0e] hover:bg-[#121212] transition-all duration-500 flex flex-col"
+                className="group relative luxury-card flex flex-col overflow-hidden"
               >
-                {/* Dish Image */}
-                <div className="relative h-56 w-full overflow-hidden bg-neutral-900">
+                {/* Dish Image Container */}
+                <div
+                  onClick={() => onSelectDish(dish)}
+                  className="relative h-64 w-full overflow-hidden bg-neutral-900 cursor-pointer"
+                >
                   <Image
                     src={dish.imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947'}
                     alt={dish.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-95"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-transparent to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c0a] via-transparent to-transparent opacity-85" />
 
-                  {/* Badge — text only, minimal */}
+                  {/* Metallic Badge */}
                   {badgeText && (
-                    <div className="absolute top-4 left-4 px-2.5 py-1 bg-gold text-black text-[9px] font-bold uppercase tracking-widest">
+                    <div className="absolute top-4 left-4 px-3 py-1 btn-gold text-[9px] font-bold uppercase tracking-widest shadow-md">
                       {badgeText}
                     </div>
                   )}
+
+                  {/* Price Tag Badge */}
+                  <div className="absolute bottom-4 right-4 px-3.5 py-1.5 bg-[#0a0806]/90 border border-[#E0C068]/40 text-[#E0C068] font-semibold text-sm shadow-lg backdrop-blur-md">
+                    {formatPrice(dish.price)}
+                  </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-serif text-lg font-bold text-neutral-100 group-hover:text-gold transition-colors duration-300 leading-snug">
-                        {dish.name}
-                      </h3>
-                      <span className="text-gold font-semibold text-sm shrink-0 mt-0.5">
-                        {dish.price} {t.priceCurrency}
-                      </span>
-                    </div>
-                    <p className="text-xs text-neutral-500 font-light line-clamp-2 leading-relaxed">
+                {/* Content Details */}
+                <div className="p-7 flex-1 flex flex-col justify-between space-y-5">
+                  <div className="space-y-2.5">
+                    <h3
+                      onClick={() => onSelectDish(dish)}
+                      className="font-serif text-xl font-bold text-[#F7F4EF] group-hover:text-[#E0C068] transition-colors duration-300 cursor-pointer leading-snug"
+                    >
+                      {dish.name}
+                    </h3>
+                    <p className="text-xs text-[#B8B0A6] font-light line-clamp-2 leading-relaxed">
                       {dish.description}
                     </p>
                   </div>
 
-                  {/* Action Row */}
-                  <div className="pt-2 border-t border-neutral-800/60 flex items-center gap-2">
+                  {/* Action Buttons */}
+                  <div className="pt-4 border-t border-[#E0C068]/15 flex items-center gap-3">
                     <button
                       onClick={() => onSelectDish(dish)}
-                      className="p-2.5 border border-neutral-800 hover:border-neutral-600 text-neutral-600 hover:text-neutral-300 transition-all duration-300 cursor-pointer"
+                      className="p-3 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-all duration-300 cursor-pointer bg-[#0a0806]/50 backdrop-blur-md"
                       title={t.viewDetails}
                       aria-label={t.viewDetails}
                     >
-                      <Eye className="w-3.5 h-3.5" />
+                      <Eye className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => addToCart(dish)}
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 border border-gold/30 hover:border-gold hover:bg-gold/10 text-gold text-[10px] font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer"
+                      className="flex-1 flex items-center justify-center gap-2.5 py-3 btn-outline-gold text-[10px] font-semibold uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer"
                     >
-                      <Plus className="w-3.5 h-3.5" />
+                      <Plus className="w-4 h-4" />
                       <span>{t.addToCart}</span>
                     </button>
                   </div>

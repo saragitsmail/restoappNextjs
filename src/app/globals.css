@@ -2,24 +2,14 @@
 
 @layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #f5f5f5;
-    --primary-gold: #d4af37;
-    --gold-champagne: #cba135;
-    --gold-glow: rgba(212, 175, 55, 0.35);
-    --surface-dark: #131313;
-    --surface-card: #181818;
-    --border-gold: rgba(212, 175, 55, 0.18);
-    --text-muted: #a0a0a0;
-  }
-
-  html:not(.dark) {
-    --background: #fcfbfa;
-    --foreground: #171717;
-    --surface-dark: #f3f0ea;
-    --surface-card: #ffffff;
-    --border-gold: rgba(180, 140, 30, 0.3);
-    --text-muted: #555555;
+    --background: #090807;
+    --foreground: #F7F4EF;
+    --primary-gold: #E0C068;
+    --gold-metallic: linear-gradient(135deg, #F9E79F 0%, #D4AF37 50%, #B78D2B 100%);
+    --gold-glow: rgba(224, 192, 104, 0.3);
+    --surface-dark: rgba(14, 12, 10, 0.85);
+    --border-gold: rgba(224, 192, 104, 0.25);
+    --text-muted: #B8B0A6;
   }
 
   body {
@@ -29,109 +19,91 @@
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6, .font-serif {
-    font-family: 'Playfair Display', 'Amiri', 'Traditional Arabic', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
-/* RTL Support Styles */
-[dir="rtl"] {
-  text-align: right;
+/* Metallic Champagne Gold Text Gradient & Glow */
+.text-gold-metallic {
+  background: linear-gradient(135deg, #FFF6D6 0%, #E0C068 45%, #C5A059 80%, #9B783E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(224, 192, 104, 0.25));
 }
 
-[dir="rtl"] .font-arabic {
-  font-family: 'Amiri', 'Tajawal', 'Cairo', sans-serif;
+.text-gold-glow {
+  text-shadow: 0 0 20px rgba(224, 192, 104, 0.4), 0 0 40px rgba(212, 175, 55, 0.2);
 }
 
-/* Glassmorphism Luxury Utilities */
-.glass-panel {
-  background: rgba(20, 20, 20, 0.55);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-html:not(.dark) .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(180, 140, 30, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
-}
-
-.glass-nav {
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
-}
-
-html:not(.dark) .glass-nav {
-  background: rgba(253, 251, 250, 0.9);
-  border-bottom: 1px solid rgba(180, 140, 30, 0.2);
-}
-
+/* Metallic Gold Buttons */
 .btn-gold {
-  background: linear-gradient(135deg, #d4af37 0%, #cba135 100%);
-  color: #0a0a0a;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #F5DC8B 0%, #E0C068 50%, #C5A059 100%);
+  color: #0A0806;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(224, 192, 104, 0.25);
 }
 
 .btn-gold:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
-  background: linear-gradient(135deg, #e5be48 0%, #d4af37 100%);
+  background: linear-gradient(135deg, #FFF0B8 0%, #F5DC8B 50%, #E0C068 100%);
+  box-shadow: 0 0 30px rgba(224, 192, 104, 0.5);
+  transform: translateY(-2px);
 }
 
 .btn-outline-gold {
-  background: transparent;
-  border: 1px solid #d4af37;
-  color: #d4af37;
+  background: rgba(10, 8, 6, 0.6);
+  border: 1px solid rgba(224, 192, 104, 0.5);
+  color: #E0C068;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
 }
 
 .btn-outline-gold:hover {
-  background: rgba(212, 175, 55, 0.12);
-  border-color: #e5be48;
-  color: #f5f5f5;
-  box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+  background: rgba(224, 192, 104, 0.15);
+  border-color: #E0C068;
+  color: #FFFFFF;
+  box-shadow: 0 0 25px rgba(224, 192, 104, 0.3);
+  transform: translateY(-2px);
 }
 
-/* Custom Gold Text */
-.text-gold {
-  color: #d4af37;
+/* Luxury Glass Cards Over Food Background */
+.luxury-card {
+  background: rgba(14, 12, 10, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(224, 192, 104, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.text-gold-gradient {
-  background: linear-gradient(135deg, #f5f5f5 0%, #d4af37 60%, #cba135 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.luxury-card:hover {
+  background: rgba(18, 15, 12, 0.9);
+  border-color: rgba(224, 192, 104, 0.45);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(224, 192, 104, 0.15);
 }
 
-/* Gold Divider */
-.gold-divider {
+/* Metallic Gold Line Accent */
+.gold-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #d4af37 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #E0C068 50%, transparent 100%);
 }
 
 /* ============================================================
    ANIMATIONS
    ============================================================ */
 
-/* Standard fade in */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -139,11 +111,10 @@ html:not(.dark) .glass-nav {
   }
 }
 
-/* Slide up */
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -151,82 +122,72 @@ html:not(.dark) .glass-nav {
   }
 }
 
-/* Hero background slow zoom — cinematic, premium */
-@keyframes heroZoom {
+@keyframes bgSlowPan {
   0% {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.06) translateY(-10px);
   }
   100% {
-    transform: scale(1.12);
-  }
-}
-
-/* Order success scale-in — replaces bouncing icon */
-@keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.94) translateY(8px);
-  }
-  100% {
-    opacity: 1;
     transform: scale(1) translateY(0);
   }
 }
 
-/* Subtle scroll indicator bounce */
+@keyframes goldPulse {
+  0%, 100% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 15px rgba(224, 192, 104, 0.3));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 30px rgba(224, 192, 104, 0.6));
+  }
+}
+
 @keyframes scrollBounce {
   0%, 100% {
     transform: translateY(0);
     opacity: 0.6;
   }
   50% {
-    transform: translateY(6px);
+    transform: translateY(8px);
     opacity: 1;
   }
 }
 
-/* Card lift hover */
-@keyframes cardLift {
-  to {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  }
-}
-
 .animate-fadeIn {
-  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slideUp {
-  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-hero-zoom {
-  animation: heroZoom 20s ease-in-out forwards;
+.animate-bg-pan {
+  animation: bgSlowPan 30s ease-in-out infinite alternate;
 }
 
-.animate-fadeInScale {
-  animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-gold-pulse {
+  animation: goldPulse 4s ease-in-out infinite;
 }
 
 .animate-scroll-bounce {
-  animation: scrollBounce 2s ease-in-out infinite;
+  animation: scrollBounce 2.5s ease-in-out infinite;
 }
 
-/* ============================================================
-   CUSTOM SCROLLBAR
-   ============================================================ */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #090807;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #25201A;
   border-radius: 3px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(224, 192, 104, 0.25);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+  background: #E0C068;
 }

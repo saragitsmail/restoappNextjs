@@ -1,21 +1,23 @@
 'use client'
 
-import { MapPin, Phone, Clock } from 'lucide-react'
+import { Phone } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 export default function ContactSection() {
   const { t } = useLanguage()
 
   return (
-    <section id="contact" className="py-28 bg-black relative border-t border-neutral-800/50">
-      <div className="max-w-7xl mx-auto px-6 space-y-14">
+    <section id="contact" className="py-32 relative border-t border-[#E0C068]/20">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
         {/* Header */}
-        <div className="text-center space-y-4">
-          <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.3em] text-gold/80">
+        <div className="text-center space-y-4 max-w-xl mx-auto">
+          <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.35em] text-[#E0C068]">
             {t.contactTag}
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-neutral-100">{t.contactTitle}</h2>
-          <div className="w-12 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto opacity-60" />
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F7F4EF] tracking-wide">
+            {t.contactTitle}
+          </h2>
+          <div className="w-16 gold-line mx-auto opacity-80" />
         </div>
 
         {/* Content Grid */}
@@ -23,61 +25,61 @@ export default function ContactSection() {
           {/* Info Cards Column */}
           <div className="space-y-4">
             {/* Address */}
-            <div className="p-6 border border-neutral-800 hover:border-neutral-700 transition-colors duration-300 space-y-3">
+            <div className="p-6 luxury-card space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-px h-4 bg-gold/60" />
-                <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-400">
+                <div className="w-px h-4 bg-[#E0C068]" />
+                <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#E0C068]">
                   {t.addressTitle}
                 </h4>
               </div>
-              <p className="text-sm text-neutral-300 font-light leading-relaxed pl-4">
+              <p className="text-xs sm:text-sm text-[#D8D0C5] font-light leading-relaxed pl-4">
                 {t.addressText}
               </p>
             </div>
 
             {/* Phone */}
-            <div className="p-6 border border-neutral-800 hover:border-neutral-700 transition-colors duration-300 space-y-3">
+            <div className="p-6 luxury-card space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-px h-4 bg-gold/60" />
-                <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-400">
+                <div className="w-px h-4 bg-[#E0C068]" />
+                <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#E0C068]">
                   {t.phoneTitle}
                 </h4>
               </div>
-              <p className="text-sm text-neutral-300 font-light pl-4 tracking-wide dir-ltr">
+              <p className="text-xs sm:text-sm text-[#D8D0C5] font-light pl-4 tracking-wide">
                 {t.phoneText}
               </p>
             </div>
 
             {/* Opening Hours */}
-            <div className="p-6 border border-neutral-800 hover:border-neutral-700 transition-colors duration-300 space-y-3">
+            <div className="p-6 luxury-card space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-px h-4 bg-gold/60" />
-                <h4 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-400">
+                <div className="w-px h-4 bg-[#E0C068]" />
+                <h4 className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#E0C068]">
                   {t.hoursTitle}
                 </h4>
               </div>
-              <p className="text-sm text-neutral-300 font-light pl-4 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#D8D0C5] font-light pl-4 leading-relaxed">
                 {t.hoursText}
               </p>
             </div>
 
-            {/* Call to Reserve */}
+            {/* Call to Reserve Button */}
             <a
               href={`tel:${t.phoneText.replace(/[\s()]/g, '')}`}
-              className="w-full flex items-center justify-center gap-3 py-4 border border-gold/30 hover:border-gold hover:bg-gold/8 text-gold text-[10px] font-semibold uppercase tracking-[0.25em] transition-all duration-300 group"
+              className="w-full flex items-center justify-center gap-3 py-4 btn-outline-gold text-[10px] font-semibold uppercase tracking-[0.25em] group"
             >
-              <Phone className="w-3.5 h-3.5 transition-transform duration-300 group-hover:scale-110" />
+              <Phone className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               <span>{t.contactCallBtn}</span>
             </a>
           </div>
 
-          {/* Embedded Google Map Column */}
-          <div className="lg:col-span-2 relative h-[420px] overflow-hidden border border-neutral-800">
+          {/* Embedded Google Map */}
+          <div className="lg:col-span-2 relative h-[420px] overflow-hidden border border-[#E0C068]/30 shadow-2xl rounded-none">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12788.163773187274!2d3.0315!3d36.7628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb2435b6fef15%3A0x6b10705a610d4810!2sEl%20Biar%2C%20Algiers%2C%20Algeria!5e0!3m2!1sen!2sdz!4v1700000000000!5m2!1sen!2sdz"
               width="100%"
               height="100%"
-              style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
+              style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) opacity(0.85)' }}
               allowFullScreen={false}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
