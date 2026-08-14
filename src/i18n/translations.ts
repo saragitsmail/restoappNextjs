@@ -199,9 +199,9 @@ export const translations: Record<Language, TranslationDictionary> = {
   fr: {
     brandName: 'LUMIÈRE',
     navHome: 'Accueil',
-    navMenu: 'Localisation et Réservation',
+    navMenu: 'Menu',
     navReviews: 'Avis',
-    navContact: 'Accès',
+    navContact: 'Localisation et Réservation',
     navOrderNow: 'Commander',
     navStudio: 'Studio Sanity',
     cartTitle: 'Votre Panier',

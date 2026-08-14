@@ -7,7 +7,7 @@ import { schema } from './src/sanity/schemaTypes'
 
 export default defineConfig({
   basePath: '/studio',
-  projectId: projectId || 'demo-project-id',
+  projectId: projectId || '9mr6co1a',
   dataset: dataset || 'production',
   title: 'Lumière Fine Dining CMS',
   schema,

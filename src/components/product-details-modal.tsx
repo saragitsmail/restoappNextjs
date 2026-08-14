@@ -54,13 +54,19 @@ export default function ProductDetailsModal({ dish, onClose }: ProductDetailsMod
 
         {/* Dish Banner Image */}
         <div className="relative h-72 sm:h-80 w-full bg-neutral-900">
-          <Image
-            src={dish.imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947'}
-            alt={dish.name}
-            fill
-            className="object-cover filter brightness-[0.92]"
-            sizes="(max-width: 768px) 100vw, 672px"
-          />
+          {dish.imageUrl ? (
+            <Image
+              src={dish.imageUrl}
+              alt={dish.name}
+              fill
+              className="object-cover filter brightness-[0.92]"
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#14120e] to-[#0a0806] text-[#E0C068]/40">
+              <span className="font-serif text-3xl font-bold tracking-widest uppercase">LUMIÈRE</span>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c0a] via-black/30 to-transparent" />
 
           {/* Badge */}

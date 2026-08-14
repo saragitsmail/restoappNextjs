@@ -27,7 +27,9 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
   ]
 
   const filteredItems =
-    activeCategory === 'all' ? items : items.filter((item) => item.category === activeCategory)
+    activeCategory === 'all'
+      ? items
+      : items.filter((item) => item.category?.toLowerCase() === activeCategory.toLowerCase())
 
   const getBadgeText = (badge?: string, isPopular?: boolean, isChefsChoice?: boolean) => {
     if (badge === 'Popular' || isPopular) return t.badgePopular
@@ -91,13 +93,19 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
                   onClick={() => onSelectDish(dish)}
                   className="relative h-64 w-full overflow-hidden bg-neutral-900 cursor-pointer"
                 >
-                  <Image
-                    src={dish.imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947'}
-                    alt={dish.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-95"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                  {dish.imageUrl ? (
+                    <Image
+                      src={dish.imageUrl}
+                      alt={dish.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-95"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#14120e] to-[#0a0806] text-[#E0C068]/40">
+                      <span className="font-serif text-2xl font-bold tracking-widest uppercase">LUMIÈRE</span>
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c0a] via-transparent to-transparent opacity-85" />
 
                   {/* Metallic Badge */}

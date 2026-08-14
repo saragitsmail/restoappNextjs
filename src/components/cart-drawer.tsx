@@ -61,12 +61,18 @@ export default function CartDrawer() {
                 >
                   {/* Dish Thumbnail */}
                   <div className="relative w-16 h-16 overflow-hidden shrink-0 border border-[#E0C068]/30">
-                    <Image
-                      src={dish.imageUrl || 'https://images.unsplash.com/photo-1544025162-d76694265947'}
-                      alt={dish.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                    {dish.imageUrl ? (
+                      <Image
+                        src={dish.imageUrl}
+                        alt={dish.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-[#14120e] text-[#E0C068]/40 font-serif font-bold text-xs">
+                        L
+                      </div>
+                    )}
                   </div>
 
                   {/* Item Info */}
