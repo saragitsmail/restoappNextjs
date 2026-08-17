@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
 @layer base {
+  /* Universal box-sizing reset — prevents padding from causing overflow on small screens */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
   :root {
     --background: #090807;
     --foreground: #F7F4EF;
@@ -24,6 +29,8 @@
     font-family: 'Hanken Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     margin: 0;
     padding: 0;
+    /* iOS safe area for notch/home indicator */
+    padding-bottom: env(safe-area-inset-bottom);
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -207,4 +214,36 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #E0C068;
+}
+
+/* ============================================================
+   MOBILE PERFORMANCE & TOUCH
+   ============================================================ */
+
+/* Disable heavy pan animation on small screens to prevent scroll jank */
+@media (max-width: 767px) {
+  .animate-bg-pan {
+    animation: none !important;
+  }
+}
+
+/* Minimum touch target size for interactive elements */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent horizontal overflow from absolutely-positioned elements */
+.overflow-guard {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* iOS momentum scrolling for modal/drawer overflow areas */
+.momentum-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
 }

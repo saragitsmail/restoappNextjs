@@ -20,6 +20,11 @@ export default function ProductDetailsModal({ dish, onClose }: ProductDetailsMod
   useEffect(() => {
     if (dish) {
       setQuantity(1)
+      // Lock body scroll when modal is open
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.body.style.overflow = ''
     }
   }, [dish])
 
@@ -37,134 +42,143 @@ export default function ProductDetailsModal({ dish, onClose }: ProductDetailsMod
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center animate-fadeIn">
       {/* Backdrop */}
       <div onClick={onClose} className="fixed inset-0 bg-black/92 backdrop-blur-lg" />
 
-      {/* Modal Container */}
-      <div className="relative w-full max-w-2xl bg-[#0e0c0a] border border-[#E0C068]/30 shadow-2xl overflow-hidden z-10 text-[#F7F4EF] animate-fadeInScale">
-        {/* Close Button */}
+      {/* Modal Container — slides up from bottom on mobile, centered on sm+ */}
+      <div className="relative w-full sm:max-w-2xl bg-[#0e0c0a] border border-[#E0C068]/30 shadow-2xl overflow-hidden z-10 text-[#F7F4EF] animate-fadeIn
+        /* Mobile: full-width panel sliding up from bottom */
+        rounded-t-none sm:rounded-none
+        max-h-[92dvh] sm:max-h-[90vh]
+        flex flex-col
+      ">
+        {/* Close Button — always visible, large touch target */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-20 p-2 text-[#B8B0A6] hover:text-white bg-[#0a0806]/80 border border-[#E0C068]/30 transition-colors cursor-pointer"
+          className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 p-2.5 text-[#B8B0A6] hover:text-white bg-[#0a0806]/80 border border-[#E0C068]/30 transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Dish Banner Image */}
-        <div className="relative h-72 sm:h-80 w-full bg-neutral-900">
-          {dish.imageUrl ? (
-            <Image
-              src={dish.imageUrl}
-              alt={dish.name}
-              fill
-              className="object-cover filter brightness-[0.92]"
-              sizes="(max-width: 768px) 100vw, 672px"
-            />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#14120e] to-[#0a0806] text-[#E0C068]/40">
-              <span className="font-serif text-3xl font-bold tracking-widest uppercase">LUMIÈRE</span>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c0a] via-black/30 to-transparent" />
-
-          {/* Badge */}
-          {dish.badge && (
-            <div className="absolute top-5 left-5 px-3.5 py-1 btn-gold text-[10px] font-bold uppercase tracking-widest shadow-lg">
-              {dish.badge}
-            </div>
-          )}
-
-          {/* Price Badge */}
-          <div className="absolute bottom-5 right-6 px-5 py-2 bg-[#090806]/95 border border-[#E0C068]/40 text-[#E0C068] font-bold text-2xl tracking-wide shadow-xl backdrop-blur-md">
-            {formatPrice(dish.price * quantity)}
-          </div>
-        </div>
-
-        {/* Details Content */}
-        <div className="p-8 sm:p-10 space-y-7">
-          <div className="space-y-3">
-            {dish.category && (
-              <span className="text-[10px] font-semibold text-[#E0C068] uppercase tracking-[0.35em]">
-                {dish.category}
-              </span>
+        {/* Scrollable content area */}
+        <div className="overflow-y-auto momentum-scroll flex-1">
+          {/* Dish Banner Image */}
+          <div className="relative h-48 sm:h-64 md:h-80 w-full bg-neutral-900 shrink-0">
+            {dish.imageUrl ? (
+              <Image
+                src={dish.imageUrl}
+                alt={dish.name}
+                fill
+                className="object-cover filter brightness-[0.92]"
+                sizes="(max-width: 768px) 100vw, 672px"
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#14120e] to-[#0a0806] text-[#E0C068]/40">
+                <span className="font-serif text-3xl font-bold tracking-widest uppercase">LUMIÈRE</span>
+              </div>
             )}
-            <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#F7F4EF] leading-tight">
-              {dish.name}
-            </h3>
-            <p className="text-sm text-[#B8B0A6] font-light leading-relaxed">
-              {dish.description}
-            </p>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c0a] via-black/30 to-transparent" />
+
+            {/* Badge */}
+            {dish.badge && (
+              <div className="absolute top-3 sm:top-5 left-3 sm:left-5 px-3 sm:px-3.5 py-1 btn-gold text-[9px] sm:text-[10px] font-bold uppercase tracking-widest shadow-lg">
+                {dish.badge}
+              </div>
+            )}
+
+            {/* Price Badge */}
+            <div className="absolute bottom-3 sm:bottom-5 right-3 sm:right-6 px-3 sm:px-5 py-1.5 sm:py-2 bg-[#090806]/95 border border-[#E0C068]/40 text-[#E0C068] font-bold text-base sm:text-xl md:text-2xl tracking-wide shadow-xl backdrop-blur-md">
+              {formatPrice(dish.price * quantity)}
+            </div>
           </div>
 
-          {/* Ingredients */}
-          {dish.ingredients && dish.ingredients.length > 0 && (
-            <div className="space-y-3 pt-4 border-t border-[#E0C068]/15">
-              <h4 className="text-[10px] font-semibold text-[#B8B0A6] uppercase tracking-[0.25em]">
-                {t.ingredientsTitle}
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {dish.ingredients.map((ing, i) => (
-                  <span
-                    key={i}
-                    className="px-3.5 py-1.5 border border-[#E0C068]/20 text-xs text-[#D8D0C5] font-light bg-[#0a0806]/60"
-                  >
-                    {ing}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Chef's Culinary Pairing */}
-          {dish.pairing && (
-            <div className="p-4 border-l-2 border-[#E0C068] bg-[#E0C068]/8">
-              <h4 className="text-[10px] font-semibold text-[#E0C068] uppercase tracking-[0.25em] mb-1">
-                {t.pairingTitle}
-              </h4>
-              <p className="text-xs text-[#D8D0C5] font-light">{dish.pairing}</p>
-            </div>
-          )}
-
-          {/* Quantity Selector & Add to Cart */}
-          <div className="pt-6 border-t border-[#E0C068]/15 flex flex-col sm:flex-row items-center gap-4">
-            {/* Quantity Selector */}
-            <div className="flex items-center border border-[#E0C068]/30 bg-[#0a0806]/60 px-3 py-2.5 w-full sm:w-auto justify-between gap-4">
-              <span className="text-[10px] uppercase tracking-widest text-[#B8B0A6] font-semibold px-2">
-                {t.quantityLabel}
-              </span>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-1 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-colors cursor-pointer"
-                  aria-label="Decrease quantity"
-                >
-                  <Minus className="w-3.5 h-3.5" />
-                </button>
-                <span className="text-sm font-bold text-white px-2 min-w-[24px] text-center">
-                  {quantity}
+          {/* Details Content */}
+          <div className="p-5 sm:p-8 md:p-10 space-y-5 sm:space-y-7">
+            <div className="space-y-2 sm:space-y-3">
+              {dish.category && (
+                <span className="text-[10px] font-semibold text-[#E0C068] uppercase tracking-[0.35em]">
+                  {dish.category}
                 </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="p-1 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-colors cursor-pointer"
-                  aria-label="Increase quantity"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                </button>
-              </div>
+              )}
+              <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#F7F4EF] leading-tight">
+                {dish.name}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#B8B0A6] font-light leading-relaxed">
+                {dish.description}
+              </p>
             </div>
 
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              className="w-full sm:flex-1 py-4 btn-gold text-xs font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2.5 shadow-xl cursor-pointer"
-            >
-              <Plus className="w-4 h-4 stroke-[3]" />
-              <span>
-                {t.addToCart} — {formatPrice(dish.price * quantity)}
-              </span>
-            </button>
+            {/* Ingredients */}
+            {dish.ingredients && dish.ingredients.length > 0 && (
+              <div className="space-y-2.5 sm:space-y-3 pt-3 sm:pt-4 border-t border-[#E0C068]/15">
+                <h4 className="text-[10px] font-semibold text-[#B8B0A6] uppercase tracking-[0.25em]">
+                  {t.ingredientsTitle}
+                </h4>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {dish.ingredients.map((ing, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 border border-[#E0C068]/20 text-xs text-[#D8D0C5] font-light bg-[#0a0806]/60"
+                    >
+                      {ing}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Chef's Culinary Pairing */}
+            {dish.pairing && (
+              <div className="p-3 sm:p-4 border-l-2 border-[#E0C068] bg-[#E0C068]/8">
+                <h4 className="text-[10px] font-semibold text-[#E0C068] uppercase tracking-[0.25em] mb-1">
+                  {t.pairingTitle}
+                </h4>
+                <p className="text-xs text-[#D8D0C5] font-light">{dish.pairing}</p>
+              </div>
+            )}
+
+            {/* Quantity Selector & Add to Cart */}
+            <div className="pt-4 sm:pt-6 border-t border-[#E0C068]/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              {/* Quantity Selector */}
+              <div className="flex items-center border border-[#E0C068]/30 bg-[#0a0806]/60 px-3 py-2.5 justify-between gap-4 sm:w-auto">
+                <span className="text-[10px] uppercase tracking-widest text-[#B8B0A6] font-semibold px-2">
+                  {t.quantityLabel}
+                </span>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="p-1.5 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="text-sm font-bold text-white px-2 min-w-[24px] text-center">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="p-1.5 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Add to Cart Button */}
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 py-3.5 sm:py-4 btn-gold text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] flex items-center justify-center gap-2 sm:gap-2.5 shadow-xl cursor-pointer min-h-[52px]"
+              >
+                <Plus className="w-4 h-4 stroke-[3] shrink-0" />
+                <span className="truncate">
+                  {t.addToCart}
+                  <span className="hidden sm:inline"> — {formatPrice(dish.price * quantity)}</span>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

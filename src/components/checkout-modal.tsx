@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { X, Loader2 } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import { useLanguage } from '@/context/LanguageContext'
@@ -16,6 +16,16 @@ export default function CheckoutModal() {
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [successOrder, setSuccessOrder] = useState<{ orderId: string; total: number } | null>(null)
+
+  // Lock body scroll when checkout is open
+  useEffect(() => {
+    if (isCheckoutOpen) {
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isCheckoutOpen])
 
   if (!isCheckoutOpen) return null
 
@@ -83,32 +93,35 @@ export default function CheckoutModal() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center animate-fadeIn">
       {/* Backdrop */}
       <div onClick={handleClose} className="fixed inset-0 bg-black/92 backdrop-blur-lg" />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-lg bg-[#0e0c0a] border border-[#E0C068]/30 shadow-2xl overflow-hidden z-10 text-[#F7F4EF] animate-fadeInScale">
+      <div className="relative w-full sm:max-w-lg bg-[#0e0c0a] border border-[#E0C068]/30 shadow-2xl overflow-hidden z-10 text-[#F7F4EF] animate-fadeIn
+        max-h-[95dvh] sm:max-h-[90vh]
+        flex flex-col
+      ">
         {/* Header */}
-        <div className="px-8 py-6 border-b border-[#E0C068]/20 bg-[#080705] flex justify-between items-center">
+        <div className="px-5 sm:px-8 py-4 sm:py-6 border-b border-[#E0C068]/20 bg-[#080705] flex justify-between items-center shrink-0">
           <div>
-            <h3 className="font-serif text-2xl text-white font-bold tracking-wide">{t.checkoutTitle}</h3>
+            <h3 className="font-serif text-xl sm:text-2xl text-white font-bold tracking-wide">{t.checkoutTitle}</h3>
             <p className="text-[11px] text-[#B8B0A6] font-light mt-1 tracking-wide">{t.checkoutSubtitle}</p>
           </div>
           <button
             onClick={handleClose}
-            className="p-2 text-[#B8B0A6] hover:text-white border border-[#E0C068]/30 hover:border-[#E0C068] transition-colors cursor-pointer"
+            className="p-2.5 text-[#B8B0A6] hover:text-white border border-[#E0C068]/30 hover:border-[#E0C068] transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Modal Content Body */}
-        <div className="px-8 py-7">
+        {/* Modal Content Body — scrollable */}
+        <div className="overflow-y-auto momentum-scroll flex-1 px-5 sm:px-8 py-5 sm:py-7">
           {successOrder ? (
             /* ── Luxury Order Received Screen ── */
-            <div className="py-8 text-center space-y-8 animate-fadeIn">
+            <div className="py-6 sm:py-8 text-center space-y-6 sm:space-y-8 animate-fadeIn">
               {/* Gold Divider Line */}
               <div className="flex items-center justify-center gap-4">
                 <div className="flex-1 h-px bg-[#E0C068]/20 max-w-[80px]" />
@@ -120,7 +133,7 @@ export default function CheckoutModal() {
                 <span className="text-[10px] uppercase tracking-[0.35em] text-[#E0C068] font-semibold">
                   Confirmation
                 </span>
-                <h4 className="font-serif text-3xl text-white font-bold tracking-tight">
+                <h4 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-tight">
                   {t.orderReceivedTitle}
                 </h4>
                 <p className="text-xs text-[#B8B0A6] max-w-sm mx-auto font-light leading-relaxed">
@@ -129,7 +142,7 @@ export default function CheckoutModal() {
               </div>
 
               {/* Order Reference Card */}
-              <div className="border border-[#E0C068]/30 bg-[#080705]/80 p-6 text-xs space-y-3 max-w-sm mx-auto shadow-xl">
+              <div className="border border-[#E0C068]/30 bg-[#080705]/80 p-5 sm:p-6 text-xs space-y-3 max-w-sm mx-auto shadow-xl">
                 <div className="flex justify-between items-center text-[#B8B0A6] uppercase tracking-widest text-[10px]">
                   <span>{t.orderIdLabel}</span>
                   <span className="font-mono text-[#E0C068] font-bold text-sm tracking-normal">
@@ -145,21 +158,21 @@ export default function CheckoutModal() {
 
               <button
                 onClick={handleClose}
-                className="inline-block px-10 py-3.5 btn-outline-gold text-[10px] font-semibold uppercase tracking-[0.25em]"
+                className="inline-block px-8 sm:px-10 py-3.5 btn-outline-gold text-[10px] font-semibold uppercase tracking-[0.25em] min-h-[48px]"
               >
                 {t.closeBtn}
               </button>
             </div>
           ) : (
             /* ── Checkout Form ── */
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {errorMsg && (
                 <div className="p-3 border border-red-900/50 bg-red-950/20 text-red-400 text-xs tracking-wide">
                   {errorMsg}
                 </div>
               )}
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {/* Full Name */}
                 <div className="space-y-1.5">
                   <label className="block text-[10px] font-semibold text-[#B8B0A6] uppercase tracking-[0.2em]">
@@ -171,7 +184,8 @@ export default function CheckoutModal() {
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder={t.fullNamePlaceholder}
-                    className="w-full px-4 py-3 bg-[#080705]/70 border border-[#E0C068]/25 focus:border-[#E0C068] text-xs text-white placeholder:text-[#6e6860] focus:outline-none transition-colors duration-300"
+                    autoComplete="name"
+                    className="w-full px-4 py-3 bg-[#080705]/70 border border-[#E0C068]/25 focus:border-[#E0C068] text-xs text-white placeholder:text-[#6e6860] focus:outline-none transition-colors duration-300 min-h-[48px]"
                   />
                 </div>
 
@@ -186,7 +200,9 @@ export default function CheckoutModal() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder={t.phonePlaceholder}
-                    className="w-full px-4 py-3 bg-[#080705]/70 border border-[#E0C068]/25 focus:border-[#E0C068] text-xs text-white placeholder:text-[#6e6860] focus:outline-none transition-colors duration-300"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    className="w-full px-4 py-3 bg-[#080705]/70 border border-[#E0C068]/25 focus:border-[#E0C068] text-xs text-white placeholder:text-[#6e6860] focus:outline-none transition-colors duration-300 min-h-[48px]"
                   />
                 </div>
 
@@ -200,7 +216,8 @@ export default function CheckoutModal() {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder={t.addressPlaceholder}
-                    className="w-full px-4 py-3 bg-[#080705]/70 border border-[#E0C068]/25 focus:border-[#E0C068] text-xs text-white placeholder:text-[#6e6860] focus:outline-none transition-colors duration-300"
+                    autoComplete="street-address"
+                    className="w-full px-4 py-3 bg-[#080705]/70 border border-[#E0C068]/25 focus:border-[#E0C068] text-xs text-white placeholder:text-[#6e6860] focus:outline-none transition-colors duration-300 min-h-[48px]"
                   />
                 </div>
 
@@ -220,23 +237,23 @@ export default function CheckoutModal() {
               </div>
 
               {/* Order Summary Box */}
-              <div className="border border-[#E0C068]/25 bg-[#080705]/50 p-4 space-y-3">
+              <div className="border border-[#E0C068]/25 bg-[#080705]/50 p-3 sm:p-4 space-y-2.5 sm:space-y-3">
                 <h5 className="text-[10px] font-semibold text-[#B8B0A6] uppercase tracking-[0.2em]">
                   {t.orderSummaryTitle}
                 </h5>
-                <div className="max-h-28 overflow-y-auto space-y-2 pr-1">
+                <div className="max-h-24 sm:max-h-28 overflow-y-auto space-y-2 pr-1">
                   {cart.map((ci) => (
-                    <div key={ci.dish._id} className="flex justify-between text-xs text-[#D8D0C5]">
-                      <span className="truncate max-w-[220px]">
+                    <div key={ci.dish._id} className="flex justify-between text-xs text-[#D8D0C5] gap-2">
+                      <span className="truncate min-w-0">
                         {ci.quantity} × {ci.dish.name}
                       </span>
-                      <span className="font-semibold text-white shrink-0 ml-2">
+                      <span className="font-semibold text-white shrink-0">
                         {formatPrice(ci.dish.price * ci.quantity)}
                       </span>
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-[#E0C068]/20 pt-3 flex justify-between text-sm">
+                <div className="border-t border-[#E0C068]/20 pt-2.5 sm:pt-3 flex justify-between text-sm">
                   <span className="text-[10px] uppercase tracking-widest text-[#B8B0A6]">{t.cartTotal}</span>
                   <span className="font-bold text-[#E0C068]">{formatPrice(subtotal)}</span>
                 </div>
@@ -246,7 +263,7 @@ export default function CheckoutModal() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full btn-gold py-4 text-[10px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn-gold py-4 text-[10px] font-bold uppercase tracking-[0.25em] flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
               >
                 {loading ? (
                   <>
@@ -257,6 +274,9 @@ export default function CheckoutModal() {
                   <span>{t.confirmOrderBtn}</span>
                 )}
               </button>
+
+              {/* iOS safe area bottom padding */}
+              <div style={{ height: 'env(safe-area-inset-bottom, 0px)' }} />
             </form>
           )}
         </div>

@@ -28,31 +28,31 @@ export default function ReviewsSection() {
   ]
 
   return (
-    <section id="reviews" className="py-32 relative border-t border-[#E0C068]/20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
+    <section id="reviews" className="py-16 sm:py-24 md:py-32 relative border-t border-[#E0C068]/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 space-y-10 sm:space-y-14 md:space-y-16">
         {/* Header */}
-        <div className="text-center space-y-4 max-w-xl mx-auto">
+        <div className="text-center space-y-3 sm:space-y-4 max-w-xl mx-auto">
           <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.35em] text-[#E0C068]">
             {t.reviewsTag}
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F7F4EF] tracking-wide">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#F7F4EF] tracking-wide">
             {t.reviewsTitle}
           </h2>
           <div className="w-16 gold-line mx-auto opacity-80" />
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {reviews.map((rev, idx) => (
             <div
               key={idx}
-              className="p-8 luxury-card space-y-6 flex flex-col justify-between"
+              className="p-5 sm:p-6 md:p-8 luxury-card space-y-4 sm:space-y-6 flex flex-col justify-between"
             >
               {/* Stars & Text */}
-              <div className="space-y-5">
-                <div className="flex gap-1.5">
+              <div className="space-y-3 sm:space-y-5">
+                <div className="flex gap-1 sm:gap-1.5">
                   {[...Array(rev.rating)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-[#E0C068] text-[#E0C068]" />
+                    <Star key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#E0C068] text-[#E0C068]" />
                   ))}
                 </div>
                 <p className="text-xs sm:text-sm text-[#D8D0C5] font-light leading-relaxed italic">
@@ -61,7 +61,7 @@ export default function ReviewsSection() {
               </div>
 
               {/* Author Info */}
-              <div className="border-t border-[#E0C068]/20 pt-5 flex items-center gap-3.5">
+              <div className="border-t border-[#E0C068]/20 pt-4 sm:pt-5 flex items-center gap-3 sm:gap-3.5">
                 <div className="w-9 h-9 border border-[#E0C068]/40 text-[#E0C068] font-serif font-bold text-sm flex items-center justify-center shrink-0 bg-[#090806]/80">
                   {rev.author.charAt(0)}
                 </div>

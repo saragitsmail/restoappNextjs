@@ -45,14 +45,14 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
   }
 
   return (
-    <section id="menu" className="py-32 relative">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
+    <section id="menu" className="py-16 sm:py-24 md:py-32 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 space-y-10 sm:space-y-14 md:space-y-16">
         {/* Section Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
+        <div className="text-center space-y-3 sm:space-y-4 max-w-2xl mx-auto">
           <span className="inline-block text-[10px] font-semibold uppercase tracking-[0.35em] text-[#E0C068]">
             {t.menuHeadingTag}
           </span>
-          <h2 className="font-serif text-4xl sm:text-6xl font-bold text-[#F7F4EF] tracking-wide">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#F7F4EF] tracking-wide">
             {t.menuHeadingTitle}
           </h2>
           <div className="w-16 h-px gold-line mx-auto" />
@@ -61,13 +61,16 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
           </p>
         </div>
 
-        {/* Category Filter Navigation */}
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        {/* Category Filter Navigation — horizontal scroll on mobile */}
+        <div
+          className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap sm:justify-center scrollbar-none"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-6 py-2.5 text-[10px] font-semibold uppercase tracking-[0.25em] transition-all duration-300 cursor-pointer border ${
+              className={`px-4 sm:px-6 py-2 sm:py-2.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-all duration-300 cursor-pointer border shrink-0 min-h-[40px] sm:min-h-[44px] ${
                 activeCategory === cat.id
                   ? 'border-[#E0C068] text-[#E0C068] bg-[#E0C068]/15 shadow-[0_0_20px_rgba(224,192,104,0.2)]'
                   : 'border-[#E0C068]/20 text-[#B8B0A6] hover:border-[#E0C068]/50 hover:text-white bg-[#0e0c0a]/60 backdrop-blur-md'
@@ -79,7 +82,7 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
         </div>
 
         {/* Menu Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {filteredItems.map((dish) => {
             const badgeText = getBadgeText(dish.badge, dish.isPopular, dish.isChefsChoice)
 
@@ -91,7 +94,7 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
                 {/* Dish Image Container */}
                 <div
                   onClick={() => onSelectDish(dish)}
-                  className="relative h-64 w-full overflow-hidden bg-neutral-900 cursor-pointer"
+                  className="relative h-52 sm:h-60 md:h-64 w-full overflow-hidden bg-neutral-900 cursor-pointer"
                 >
                   {dish.imageUrl ? (
                     <Image
@@ -99,7 +102,7 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
                       alt={dish.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-95"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#14120e] to-[#0a0806] text-[#E0C068]/40">
@@ -110,23 +113,23 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
 
                   {/* Metallic Badge */}
                   {badgeText && (
-                    <div className="absolute top-4 left-4 px-3 py-1 btn-gold text-[9px] font-bold uppercase tracking-widest shadow-md">
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 px-2.5 sm:px-3 py-1 btn-gold text-[8px] sm:text-[9px] font-bold uppercase tracking-widest shadow-md">
                       {badgeText}
                     </div>
                   )}
 
                   {/* Price Tag Badge */}
-                  <div className="absolute bottom-4 right-4 px-3.5 py-1.5 bg-[#0a0806]/90 border border-[#E0C068]/40 text-[#E0C068] font-semibold text-sm shadow-lg backdrop-blur-md">
+                  <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 px-3 sm:px-3.5 py-1 sm:py-1.5 bg-[#0a0806]/90 border border-[#E0C068]/40 text-[#E0C068] font-semibold text-xs sm:text-sm shadow-lg backdrop-blur-md">
                     {formatPrice(dish.price)}
                   </div>
                 </div>
 
                 {/* Content Details */}
-                <div className="p-7 flex-1 flex flex-col justify-between space-y-5">
-                  <div className="space-y-2.5">
+                <div className="p-4 sm:p-5 md:p-7 flex-1 flex flex-col justify-between space-y-3 sm:space-y-5">
+                  <div className="space-y-2 sm:space-y-2.5">
                     <h3
                       onClick={() => onSelectDish(dish)}
-                      className="font-serif text-xl font-bold text-[#F7F4EF] group-hover:text-[#E0C068] transition-colors duration-300 cursor-pointer leading-snug"
+                      className="font-serif text-lg sm:text-xl font-bold text-[#F7F4EF] group-hover:text-[#E0C068] transition-colors duration-300 cursor-pointer leading-snug"
                     >
                       {dish.name}
                     </h3>
@@ -136,10 +139,10 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="pt-4 border-t border-[#E0C068]/15 flex items-center gap-3">
+                  <div className="pt-3 sm:pt-4 border-t border-[#E0C068]/15 flex items-center gap-2 sm:gap-3">
                     <button
                       onClick={() => onSelectDish(dish)}
-                      className="p-3 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-all duration-300 cursor-pointer bg-[#0a0806]/50 backdrop-blur-md"
+                      className="p-2.5 sm:p-3 border border-[#E0C068]/30 hover:border-[#E0C068] text-[#B8B0A6] hover:text-white transition-all duration-300 cursor-pointer bg-[#0a0806]/50 backdrop-blur-md min-w-[44px] min-h-[44px] flex items-center justify-center"
                       title={t.viewDetails}
                       aria-label={t.viewDetails}
                     >
@@ -147,9 +150,9 @@ export default function CrowdFavorites({ items, onSelectDish }: CrowdFavoritesPr
                     </button>
                     <button
                       onClick={() => addToCart(dish)}
-                      className="flex-1 flex items-center justify-center gap-2.5 py-3 btn-outline-gold text-[10px] font-semibold uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer"
+                      className="flex-1 flex items-center justify-center gap-2 sm:gap-2.5 py-2.5 sm:py-3 btn-outline-gold text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all duration-300 cursor-pointer min-h-[44px]"
                     >
-                      <Plus className="w-4 h-4" />
+                      <Plus className="w-4 h-4 shrink-0" />
                       <span>{t.addToCart}</span>
                     </button>
                   </div>
